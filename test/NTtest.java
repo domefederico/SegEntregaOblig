@@ -20,7 +20,7 @@ public class NTtest {
 
     @Test
     public void addTest(){
-        assertEquals(nt.searchValue(2).getValue(),2 );
+        assertEquals(nt.searchValue(2).getValue(), 2);
         boolean thrown = false;
         try{ nt.add(null, 2); }
         catch(RuntimeException r){ thrown = true; }
