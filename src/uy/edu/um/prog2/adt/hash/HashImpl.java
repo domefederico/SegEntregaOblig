@@ -85,4 +85,18 @@ public class HashImpl<K,T> implements Hash<K,T> {
         }
         return a;
     }
+
+    @Override
+    public HashNode<K, T> searchNodo(K key, T data) {
+        HashNode<K,T> nodo = new HashNode<>(key,data);
+        int a = -1;
+        for (int i = 0; i < size; i++) {
+            if (grilla[i] != null) {
+                if (grilla[i].equals(nodo)) {
+                    a = i;
+                }
+            }
+        }
+        return grilla[a];
+    }
 }
