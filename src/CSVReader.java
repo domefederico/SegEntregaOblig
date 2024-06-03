@@ -1,4 +1,6 @@
 import Entities.Song;
+import uy.edu.um.prog2.adt.linkedlist.MyLinkedListImpl;
+import uy.edu.um.prog2.adt.linkedlist.MyList;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
@@ -9,10 +11,9 @@ import java.util.List;
 public class CSVReader {
 
     public static void main(String[] args) {
-        String csvFile = "C:\\Users\\juan.LAPTOP-CFOLLE\\Desktop\\Programacion\\Tercer Semestre\\Programacion II\\Obligatorio\\SegEntregaOblig\\data_set.csv"; // Especifica la ruta a tu archivo CSV
+        String csvFile = "data_set.csv";                // Especifica la ruta a tu archivo CSV
         String line = "";
-        String cvsSplitBy = ","; // Delimitador del CSV
-
+        String cvsSplitBy = ",";                // Delimitador del CSV
 
         List<Song> songs = new ArrayList<>();
 
@@ -20,20 +21,51 @@ public class CSVReader {
             // Leer la primera línea (encabezados) y descartarla
             br.readLine();
 
+
             while ((line = br.readLine()) != null) {
+
                 // Elimina las comillas dobles al principio y al final de la línea
                 line = line.substring(1, line.length() - 2);
 
-                line.replaceAll(" \"\"","");
+                line = line.replace(", ","{");
+                line = line.replaceAll("\"","");
+                line = line.replace("Dear My Friend,","Dear My Friend");
+                line = line.replace("Ya no me duele :,)","Ya no me duele");
+                line = line.replace("最後一堂課 - 《媽,別鬧了!》影集片尾曲","最後一堂課 - 《媽別鬧了!》影集片尾曲");
+                line = line.replace("最後一堂課 (《媽,別鬧了!》影集片尾曲)","最後一堂課 (《媽別鬧了!》影集片尾曲)");
+                line = line.replace("Rochy RD,Carlos Boutique Por El Respeto","Rochy RD{Carlos Boutique Por El Respeto");
+                line = line.replace("3,14,Gson","3.14,Gson");
+                line = line.replace("324763,3,14","324763,3.14");
+                line = line.replace("1,2,3 Soleil","1.2.3 Soleil");     // falta darlos vuelta al final
 
-                // Usa split para dividir la línea en campos
+
+
+                // Divide la línea utilizando la coma como separador
                 String[] fields = line.split(cvsSplitBy);
+
+                // Itera sobre los datos y elimina las comillas dobles
+                for (int i = 0; i < fields.length; i++) {
+                    fields[i] = fields[i].replace("\"", "");
+                }
+
+                for (int j = 0; j < fields.length; j++) {
+                    if (j == 2) {
+                        String[] art = fields[j].split("\\{");
+                    }
+                }
+
+                // Itera sobre los datos y reemplaza el asterisco
+                for (int i = 0; i < fields.length; i++) {
+                    if (i == 2) {
+                        fields[i].replace("*",", ");
+                    }
+                }
 
                 // Crear una instancia de Song usando los campos
                 Song song = new Song(
                         fields[0], // spotifyId
                         fields[1], // name
-                        fields[2], // artists
+                        fields[2], // artists             //le pone solo el primer artista
                         Integer.parseInt(fields[3]), // dailyRank
                         Integer.parseInt(fields[4]), // dailyMovement
                         Integer.parseInt(fields[5]), // weeklyMovement
@@ -65,10 +97,10 @@ public class CSVReader {
         } catch (IOException e) {
             e.printStackTrace();
         }
-
-        // Aquí puedes procesar la lista de canciones como desees
-        for (Song song : songs) {
-            System.out.println(song.getName() + " by " + song.getArtists());
-        }
+//
+//        // Aquí puedes procesar la lista de canciones como desees
+//        for (Song song : songs) {
+//            System.out.println(song.getName() + " by " + song.getArtists());
+//        }
     }
 }
