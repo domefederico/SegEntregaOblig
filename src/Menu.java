@@ -1,6 +1,8 @@
 import Entities.Song;
 import uy.edu.um.prog2.adt.binarytree.MySearchBinaryTree;
+import uy.edu.um.prog2.adt.hash.HashImpl;
 import uy.edu.um.prog2.adt.linkedlist.MyList;
+
 
 import java.util.Scanner;
 
@@ -10,8 +12,9 @@ import static Funciones.Top10.top10;
 public class Menu {
     public static void main(String[] args) {
 
-        MyList<Song> songslist = CSVLoader().first;
+        HashImpl<String[], MyList<Song>> hashDP = CSVLoader().first;
         MySearchBinaryTree<Integer, Song> songstree = CSVLoader().second;
+
 
         while (1 == 1) {
             Scanner scanner = new Scanner(System.in);
@@ -23,7 +26,7 @@ public class Menu {
 
                 System.out.println("Indique el dia");
                 String dia = scanner.next();
-                top10(pais,dia,songslist);
+                top10(pais,dia,hashDP);
             }
             else if (opcion == 2) {
             }

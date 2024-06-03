@@ -2,9 +2,12 @@ package Funciones;
 
 import Entities.Artist;
 import Entities.Song;
+
+
 import jdk.internal.net.http.common.Pair;
 import uy.edu.um.prog2.adt.binarytree.MySearchBinaryTree;
 import uy.edu.um.prog2.adt.binarytree.MySearchBinaryTreeImpl;
+import uy.edu.um.prog2.adt.hash.HashImpl;
 import uy.edu.um.prog2.adt.linkedlist.MyLinkedListImpl;
 import uy.edu.um.prog2.adt.linkedlist.MyList;
 
@@ -15,10 +18,11 @@ import java.io.IOException;
 
 public class CSVReader {
 
-    public static Pair<MyList<Song>, MySearchBinaryTree<Integer,Song>> CSVLoader() {
+    public static Pair<HashImpl<String[], MyList<Song>>, MySearchBinaryTree<Integer,Song>> CSVLoader() {
         String line;
-        MyList<Song> songslist = new MyLinkedListImpl<>();
+        //MyList<Song> songslist = new MyLinkedListImpl<>();
         MySearchBinaryTree<Integer, Song> songstree = new MySearchBinaryTreeImpl<>();
+        HashImpl<String[], MyList<Song>> hashDP = new HashImpl<>(10);
 
         try (BufferedReader br = new BufferedReader(new FileReader("data_set.csv"))) {
             //Lee la primer linea, que no nos importa
@@ -96,11 +100,28 @@ public class CSVReader {
                 );
 
                 //Agrega la cancion a la lista y al arbol
-                songslist.add(song);
+                //songslist.add(song);
                 songstree.add(1,song);
+
+                // Ya creo el hash dia y pais
+
+
+                String[] clave = new String[2];
+                clave[0] = song.getCountry();
+                clave[1] = song.getSnapshotDate();
+                MyList<Song> auxSong = new MyLinkedListImpl<>();
+                for (int n = 0; n <= hashDP.getSize(); n++) {
+                    if (hashDP.search(clave,auxSong) == -1) {
+                        auxSong.add(song);
+                        hashDP.insert(clave,auxSong);
+                    } else {
+                        MyList<Song> canciones = hashDP.searchNodo(clave,auxSong).getData();
+                        canciones.add(song);
+                    }
+                }
             }
         } catch (IOException e) {e.printStackTrace();}
-        return new Pair<>(songslist, songstree);
+        return new Pair<>(hashDP, songstree);
     }
 
 }

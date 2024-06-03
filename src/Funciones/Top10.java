@@ -11,15 +11,17 @@ import static Funciones.PaisDiaCanciones.hashPD;
 
 public class Top10 {
 
-       public static void top10(String pais, String dia,MyList<Song> songs) {
-           HashImpl<String[], MyList<Song>> hash = hashPD(songs);            // hay que sacarlo para q lo haga una vez sola
+       public static void top10(String pais, String dia,HashImpl<String[], MyList<Song>> hashDP) {
+           //HashImpl<String[], MyList<Song>> hash = hashPD(songs);            // hay que sacarlo para q lo haga una vez sola
+
+
 
            String[] clave = new String[2];
            clave[0] = pais;
            clave[1] = dia;
            MyList<Song> auxSong = new MyLinkedListImpl<>();
 
-           MyList<Song> fila = hash.searchNodo(clave,auxSong).getData();
+           MyList<Song> fila = hashDP.searchNodo(clave,auxSong).getData();
 
            MySearchBinaryTreeImpl<Integer,Song> arbol = new MySearchBinaryTreeImpl<>();
 
