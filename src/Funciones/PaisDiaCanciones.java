@@ -1,4 +1,4 @@
-package Nose;
+package Funciones;
 
 import Entities.Song;
 import uy.edu.um.prog2.adt.hash.HashImpl;
@@ -10,7 +10,6 @@ public class PaisDiaCanciones {
 
     public static HashImpl<String[], MyList<Song>> hashPD() {
         HashImpl<String[], MyList<Song>> hash = new HashImpl<>(10);
-
 
 //        for (int i = 0; i <= songs.size; i++) {
 //            String[] clave = new String[2];

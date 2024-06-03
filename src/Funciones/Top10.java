@@ -1,20 +1,19 @@
-package Entities;
+package Funciones;
 
 
 
+import Entities.Song;
 import uy.edu.um.prog2.adt.hash.*;
 import uy.edu.um.prog2.adt.binarytree.*;
 import uy.edu.um.prog2.adt.linkedlist.*;
 import uy.edu.um.prog2.adt.linkedlist.MyList;
 
-import static Nose.DiaTop50.hashDT50;
-import static Nose.PaisDiaCanciones.hashPD;
+import static Funciones.DiaTop50.hashDT50;
+import static Funciones.PaisDiaCanciones.hashPD;
 
-public class Funciones {
+public class Top10 {
 
-
-
-       public static void top10(String pais, String dia) {
+       public static void top10(String pais, String dia,MyList<Song> songs) {
            HashImpl<String[], MyList<Song>> hash = hashPD();            // hay que sacarlo para q lo haga una vez sola
 
 

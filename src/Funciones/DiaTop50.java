@@ -1,4 +1,4 @@
-package Nose;
+package Funciones;
 
 import Entities.Song;
 import uy.edu.um.prog2.adt.hash.HashImpl;

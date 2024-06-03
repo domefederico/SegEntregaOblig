@@ -1,3 +1,5 @@
+package Funciones;
+
 import Entities.Song;
 import uy.edu.um.prog2.adt.linkedlist.MyLinkedListImpl;
 import uy.edu.um.prog2.adt.linkedlist.MyList;
@@ -10,12 +12,12 @@ import java.util.List;
 
 public class CSVReader {
 
-    public static void main(String[] args) {
+    public static MyList<Song> CSVLoader() {
         String csvFile = "data_set.csv";                // Especifica la ruta a tu archivo CSV
         String line = "";
         String cvsSplitBy = ",";                // Delimitador del CSV
 
-        List<Song> songs = new ArrayList<>();
+        MyList<Song> songs = new MyLinkedListImpl<>();
 
         try (BufferedReader br = new BufferedReader(new FileReader(csvFile))) {
             // Leer la primera línea (encabezados) y descartarla
@@ -102,5 +104,6 @@ public class CSVReader {
 //        for (Song song : songs) {
 //            System.out.println(song.getName() + " by " + song.getArtists());
 //        }
+        return songs;
     }
 }
