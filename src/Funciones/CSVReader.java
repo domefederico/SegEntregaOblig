@@ -2,27 +2,27 @@ package Funciones;
 
 import Entities.Artist;
 import Entities.Song;
+import jdk.internal.net.http.common.Pair;
+import uy.edu.um.prog2.adt.binarytree.MySearchBinaryTree;
+import uy.edu.um.prog2.adt.binarytree.MySearchBinaryTreeImpl;
 import uy.edu.um.prog2.adt.linkedlist.MyLinkedListImpl;
 import uy.edu.um.prog2.adt.linkedlist.MyList;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
+
 
 public class CSVReader {
 
-    public static MyList<Song> CSVLoader() {
-        String csvFile = "data_set.csv";                // Especifica la ruta a tu archivo CSV
-        String line = "";
+    public static Pair<MyList<Song>, MySearchBinaryTree<Integer,Song>> CSVLoader() {
+        String line;
+        MyList<Song> songslist = new MyLinkedListImpl<>();
+        MySearchBinaryTree<Integer, Song> songstree = new MySearchBinaryTreeImpl<>();
 
-        MyList<Song> songs = new MyLinkedListImpl<>();
-
-        try (BufferedReader br = new BufferedReader(new FileReader(csvFile))) {
+        try (BufferedReader br = new BufferedReader(new FileReader("data_set.csv"))) {
             //Lee la primer linea, que no nos importa
             br.readLine();
-
 
             while ((line = br.readLine()) != null) {
 
@@ -44,6 +44,7 @@ public class CSVReader {
                 // Separa por la coma
                 String[] fields = line.split(",");
 
+                //deshace los cambios
                 line = line.replace("Dear My Friend", "Dear My Friend,");
                 line = line.replace("Ya no me duele", "Ya no me duele :,)");
                 line = line.replace("最後一堂課 - 《媽別鬧了!》影集片尾曲", "最後一堂課 - 《媽,別鬧了!》影集片尾曲");
@@ -93,11 +94,13 @@ public class CSVReader {
                         Float.parseFloat(fields[23]), // tempo
                         Integer.parseInt(fields[24])  // timeSignature
                 );
-                //Agrega song a la lista de Song
-                songs.add(song);
+
+                //Agrega la cancion a la lista y al arbol
+                songslist.add(song);
+                songstree.add(1,song);
             }
         } catch (IOException e) {e.printStackTrace();}
-
-        return songs;
+        return new Pair<>(songslist, songstree);
     }
+
 }
