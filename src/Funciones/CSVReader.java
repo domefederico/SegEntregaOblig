@@ -19,6 +19,7 @@ public class CSVReader {
 
         MyList<Song> songs = new MyLinkedListImpl<>();
 
+
         try (BufferedReader br = new BufferedReader(new FileReader(csvFile))) {
             // Leer la primera línea (encabezados) y descartarla
             br.readLine();
