@@ -8,6 +8,7 @@ import static Funciones.Top10.top10;
 
 public class Menu {
     public static void main(String[] args) {
+
         MyList<Song> songs = CSVLoader();
 
         while (1 == 1) {

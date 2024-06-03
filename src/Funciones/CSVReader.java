@@ -1,5 +1,6 @@
 package Funciones;
 
+import Entities.Artist;
 import Entities.Song;
 import uy.edu.um.prog2.adt.linkedlist.MyLinkedListImpl;
 import uy.edu.um.prog2.adt.linkedlist.MyList;
@@ -15,23 +16,22 @@ public class CSVReader {
     public static MyList<Song> CSVLoader() {
         String csvFile = "data_set.csv";                // Especifica la ruta a tu archivo CSV
         String line = "";
-        String cvsSplitBy = ",";                // Delimitador del CSV
 
         MyList<Song> songs = new MyLinkedListImpl<>();
 
-
         try (BufferedReader br = new BufferedReader(new FileReader(csvFile))) {
-            // Leer la primera línea (encabezados) y descartarla
+            //Lee la primer linea, que no nos importa
             br.readLine();
 
 
             while ((line = br.readLine()) != null) {
 
-                // Elimina las comillas dobles al principio y al final de la línea
+                //Borra los ;; del final
                 line = line.substring(1, line.length() - 2);
 
+                //Cambios en las canciones raras
                 line = line.replace(", ","{");
-                line = line.replaceAll("\"","");
+                line = line.replace("\"","");
                 line = line.replace("Dear My Friend,","Dear My Friend");
                 line = line.replace("Ya no me duele :,)","Ya no me duele");
                 line = line.replace("最後一堂課 - 《媽,別鬧了!》影集片尾曲","最後一堂課 - 《媽別鬧了!》影集片尾曲");
@@ -41,34 +41,35 @@ public class CSVReader {
                 line = line.replace("324763,3,14","324763,3.14");
                 line = line.replace("1,2,3 Soleil","1.2.3 Soleil");     // falta darlos vuelta al final
 
+                // Separa por la coma
+                String[] fields = line.split(",");
+
+                line = line.replace("Dear My Friend", "Dear My Friend,");
+                line = line.replace("Ya no me duele", "Ya no me duele :,)");
+                line = line.replace("最後一堂課 - 《媽別鬧了!》影集片尾曲", "最後一堂課 - 《媽,別鬧了!》影集片尾曲");
+                line = line.replace("最後一堂課 (《媽別鬧了!》影集片尾曲)", "最後一堂課 (《媽,別鬧了!》影集片尾曲)");
+                line = line.replace("Rochy RD{Carlos Boutique Por El Respeto", "Rochy RD,Carlos Boutique Por El Respeto");
+                line = line.replace("3.14,Gson", "3,14,Gson");
+                line = line.replace("324763,3.14", "324763,3,14");
+                line = line.replace("1.2.3 Soleil", "1,2,3 Soleil");
 
 
-                // Divide la línea utilizando la coma como separador
-                String[] fields = line.split(cvsSplitBy);
-
-                // Itera sobre los datos y elimina las comillas dobles
+                //Elimina las comillas dobles
                 for (int i = 0; i < fields.length; i++) {
                     fields[i] = fields[i].replace("\"", "");
                 }
 
-                for (int j = 0; j < fields.length; j++) {
-                    if (j == 2) {
-                        String[] art = fields[j].split("\\{");
-                    }
+                //Separa y crea los artistas
+                String[] arts = fields[2].split("\\{");
+                for (String art : arts) {
+                    Artist artist = new Artist(art);
                 }
 
-                // Itera sobre los datos y reemplaza el asterisco
-                for (int i = 0; i < fields.length; i++) {
-                    if (i == 2) {
-                        fields[i].replace("*",", ");
-                    }
-                }
-
-                // Crear una instancia de Song usando los campos
+                // Crear la Song
                 Song song = new Song(
                         fields[0], // spotifyId
                         fields[1], // name
-                        fields[2], // artists             //le pone solo el primer artista
+                        arts, // artists
                         Integer.parseInt(fields[3]), // dailyRank
                         Integer.parseInt(fields[4]), // dailyMovement
                         Integer.parseInt(fields[5]), // weeklyMovement
@@ -92,19 +93,11 @@ public class CSVReader {
                         Float.parseFloat(fields[23]), // tempo
                         Integer.parseInt(fields[24])  // timeSignature
                 );
-
-                // Añadir la canción a la lista
+                //Agrega song a la lista de Song
                 songs.add(song);
             }
+        } catch (IOException e) {e.printStackTrace();}
 
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-//
-//        // Aquí puedes procesar la lista de canciones como desees
-//        for (Song song : songs) {
-//            System.out.println(song.getName() + " by " + song.getArtists());
-//        }
         return songs;
     }
 }

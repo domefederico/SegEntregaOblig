@@ -4,7 +4,7 @@ public class Song {
 
     private String spotifyId;
     private String name;
-    private String artists;
+    private String[] artists;
     private int dailyRank;
     private int dailyMovement;
     private int weeklyMovement;
@@ -29,7 +29,7 @@ public class Song {
     private int timeSignature;
 
     // Constructor
-    public Song(String spotifyId, String name, String artists, int dailyRank, int dailyMovement, int weeklyMovement,
+    public Song(String spotifyId, String name, String[] artists, int dailyRank, int dailyMovement, int weeklyMovement,
                 String country, String snapshotDate, int popularity, boolean isExplicit, int durationMs,
                 String albumName, String albumReleaseDate, float danceability, float energy, int key, float loudness,
                 int mode, float speechiness, float acousticness, float instrumentalness, float liveness, float valence,
@@ -78,11 +78,11 @@ public class Song {
         this.name = name;
     }
 
-    public String getArtists() {
+    public String[] getArtists() {
         return artists;
     }
 
-    public void setArtists(String artists) {
+    public void setArtists(String[] artists) {
         this.artists = artists;
     }
 
