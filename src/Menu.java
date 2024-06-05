@@ -1,4 +1,6 @@
 import Entities.Song;
+import Funciones.CSVReader;
+import uy.edu.um.prog2.adt.Exceptions.InformacionInvalida;
 import uy.edu.um.prog2.adt.binarytree.MySearchBinaryTree;
 import uy.edu.um.prog2.adt.hash.HashImpl;
 import uy.edu.um.prog2.adt.linkedlist.MyList;
@@ -10,10 +12,11 @@ import static Funciones.CSVReader.CSVLoader;
 import static Funciones.Top10.top10;
 
 public class Menu {
-    public static void main(String[] args) {
 
-        HashImpl<String[], MyList<Song>> hashDP = CSVLoader().first;
-        MySearchBinaryTree<Integer, Song> songstree = CSVLoader().second;
+    public static void main(String[] args) throws InformacionInvalida {
+
+        HashImpl<String[], MyList<Song>> hashDP = CSVReader.getHashDP();
+        MySearchBinaryTree<Integer, Song> songstree = CSVReader.getSongstree();
 
 
         while (1 == 1) {

@@ -4,7 +4,6 @@ import Entities.Artist;
 import Entities.Song;
 
 
-import jdk.internal.net.http.common.Pair;
 import uy.edu.um.prog2.adt.binarytree.MySearchBinaryTree;
 import uy.edu.um.prog2.adt.binarytree.MySearchBinaryTreeImpl;
 import uy.edu.um.prog2.adt.hash.HashImpl;
@@ -18,7 +17,28 @@ import java.io.IOException;
 
 public class CSVReader {
 
-    public static Pair<HashImpl<String[], MyList<Song>>, MySearchBinaryTree<Integer,Song>> CSVLoader() {
+    private static HashImpl<String[], MyList<Song>> hashDP;
+
+    private static MySearchBinaryTree<Integer, Song> songstree;
+
+    public static HashImpl<String[], MyList<Song>> getHashDP() {
+        CSVLoader();
+        return hashDP;
+    }
+
+    public void setHashDP(HashImpl<String[], MyList<Song>> hashDP) {
+        this.hashDP = hashDP;
+    }
+
+    public static MySearchBinaryTree<Integer, Song> getSongstree() {
+        return songstree;
+    }
+
+    public void setSongstree(MySearchBinaryTree<Integer, Song> songstree) {
+        this.songstree = songstree;
+    }
+
+    public static void CSVLoader() {
         String line;
         //MyList<Song> songslist = new MyLinkedListImpl<>();
         MySearchBinaryTree<Integer, Song> songstree = new MySearchBinaryTreeImpl<>();
@@ -58,16 +78,16 @@ public class CSVReader {
                 line = line.replace("324763,3.14", "324763,3,14");
                 line = line.replace("1.2.3 Soleil", "1,2,3 Soleil");
 
-
-                //Elimina las comillas dobles
-                for (int i = 0; i < fields.length; i++) {
-                    fields[i] = fields[i].replace("\"", "");
-                }
+//
+//                //Elimina las comillas dobles
+//                for (int i = 0; i < fields.length; i++) {
+//                    fields[i] = fields[i].replace("\"", "");
+//                }
 
                 //Separa y crea los artistas
                 String[] arts = fields[2].split("\\{");
                 for (String art : arts) {
-                    Artist artist = new Artist(art);
+                    new Artist(art);
                 }
 
                 // Crear la Song
@@ -99,29 +119,24 @@ public class CSVReader {
                         Integer.parseInt(fields[24])  // timeSignature
                 );
 
-                //Agrega la cancion a la lista y al arbol
-                //songslist.add(song);
+                //Agrega la cancion al hash y al arbol
                 songstree.add(1,song);
-
-                // Ya creo el hash dia y pais
-
 
                 String[] clave = new String[2];
                 clave[0] = song.getCountry();
                 clave[1] = song.getSnapshotDate();
                 MyList<Song> auxSong = new MyLinkedListImpl<>();
-                for (int n = 0; n <= hashDP.getSize(); n++) {
-                    if (hashDP.search(clave,auxSong) == -1) {
-                        auxSong.add(song);
-                        hashDP.insert(clave,auxSong);
-                    } else {
-                        MyList<Song> canciones = hashDP.searchNodo(clave,auxSong).getData();
-                        canciones.add(song);
-                    }
+
+                if (hashDP.search(clave,auxSong) == -1) {
+                    auxSong.add(song);
+                    hashDP.insert(clave,auxSong);
+                } else {
+                    MyList<Song> canciones = hashDP.searchNodo(clave,auxSong).getData();
+                    canciones.add(song);
                 }
+
             }
         } catch (IOException e) {e.printStackTrace();}
-        return new Pair<>(hashDP, songstree);
     }
 
 }
