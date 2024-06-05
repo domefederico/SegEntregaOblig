@@ -3,9 +3,6 @@ package Funciones;
 import Entities.Artist;
 import Entities.Song;
 
-
-import uy.edu.um.prog2.adt.binarytree.MySearchBinaryTree;
-import uy.edu.um.prog2.adt.binarytree.MySearchBinaryTreeImpl;
 import uy.edu.um.prog2.adt.hash.HashImpl;
 import uy.edu.um.prog2.adt.linkedlist.MyLinkedListImpl;
 import uy.edu.um.prog2.adt.linkedlist.MyList;
@@ -17,19 +14,20 @@ import java.io.IOException;
 
 public class CSVReader {
 
-    private static HashImpl<String[], MyList<Song>> hashDP;
-    public static HashImpl<String[], MyList<Song>> getHashDP() {
-        CSVLoader();
+    private HashImpl<String, HashImpl<String,MyList<Song>>> hashDP;
+    public void setHashDP(HashImpl<String, HashImpl<String,MyList<Song>>> hash){
+        this.hashDP = hash;
+    }
+    public HashImpl<String, HashImpl<String,MyList<Song>>> getHashDP() {
         return hashDP;
     }
 
-    public static void CSVLoader() {
+    public CSVReader() {
         String line;
-        //MyList<Song> songslist = new MyLinkedListImpl<>();
-        MySearchBinaryTree<Integer, Song> songstree = new MySearchBinaryTreeImpl<>();
-        HashImpl<String[], MyList<Song>> hashDP = new HashImpl<>(10);
+        HashImpl<String, HashImpl<String,MyList<Song>>> hash = new HashImpl<>(10);
 
-        try (BufferedReader br = new BufferedReader(new FileReader("data_set.csv"))) {
+
+        try (BufferedReader br = new BufferedReader(new FileReader("C:\\Users\\juan.LAPTOP-CFOLLE\\Desktop\\Facultad\\Tercer Semestre\\Programacion II\\Obligatorio\\SegEntregaOblig\\data_set_test.csv"))) {
             //Lee la primer linea, que no nos importa
             br.readLine();
 
@@ -79,41 +77,25 @@ public class CSVReader {
                         Integer.parseInt(fields[5]), // weeklyMovement
                         fields[6], // country
                         fields[7], // snapshotDate
-                        Integer.parseInt(fields[8]), // popularity
-                        Boolean.parseBoolean(fields[9]), // isExplicit
-                        Integer.parseInt(fields[10]), // durationMs
-                        fields[11], // albumName
-                        fields[12], // albumReleaseDate
-                        Float.parseFloat(fields[13]), // danceability
-                        Float.parseFloat(fields[14]), // energy
-                        Integer.parseInt(fields[15]), // key
-                        Float.parseFloat(fields[16]), // loudness
-                        Integer.parseInt(fields[17]), // mode
-                        Float.parseFloat(fields[18]), // speechiness
-                        Float.parseFloat(fields[19]), // acousticness
-                        Float.parseFloat(fields[20]), // instrumentalness
-                        Float.parseFloat(fields[21]), // liveness
-                        Float.parseFloat(fields[22]), // valence
-                        Float.parseFloat(fields[23]), // tempo
-                        Integer.parseInt(fields[24])  // timeSignature
+                        Float.parseFloat(fields[23]) // tempo
                 );
 
                 //Agrega la cancion al hash
-                String[] clave = new String[2];
-                clave[0] = song.getCountry();
-                clave[1] = song.getSnapshotDate();
-                MyList<Song> auxSong = new MyLinkedListImpl<>();
 
-                if (hashDP.search(clave,auxSong) == -1) {
-                    auxSong.add(song);
-                    hashDP.insert(clave,auxSong);
-                } else {
-                    MyList<Song> canciones = hashDP.searchNodo(clave,auxSong).getData();
-                    canciones.add(song);
+                if(hash.search(song.getSnapshotDate()) == -1) {
+                    hash.insert(song.getSnapshotDate(), new HashImpl<>(10));
                 }
+                if(hash.searchNodo(song.getSnapshotDate()).getData().search(song.getCountry()) == -1){
+                    hash.searchNodo(song.getSnapshotDate()).getData().insert(song.getCountry(), new MyLinkedListImpl<>());
+                }
+                hash.searchNodo(song.getSnapshotDate()).getData().searchNodo(song.getCountry()).getData().add(song);
+
+
+
+
 
             }
         } catch (IOException e) {e.printStackTrace();}
+        setHashDP(hash);
     }
-
 }

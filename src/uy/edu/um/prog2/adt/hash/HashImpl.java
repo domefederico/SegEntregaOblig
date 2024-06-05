@@ -9,7 +9,7 @@ public class HashImpl<K,T> implements Hash<K,T> {
     public int size;
     private int capacity;
 
-    private static final float loadfactor = 0.65F;
+    private static final float loadfactor = 0.95F;
 
 
     public HashImpl(int size) {
@@ -34,6 +34,10 @@ public class HashImpl<K,T> implements Hash<K,T> {
         this.size = size;
     }
 
+    public int getCapacity() {
+        return capacity;
+    }
+
     @Override
     public void insert(K key, T data) {
         HashNode<K, T> nuevo = new HashNode<>(key, data);
@@ -50,6 +54,7 @@ public class HashImpl<K,T> implements Hash<K,T> {
         }
 
         grilla[marcador] = nuevo;
+        capacity++;
 
     }
 
@@ -58,13 +63,15 @@ public class HashImpl<K,T> implements Hash<K,T> {
         size = size*2;
         grilla = new HashNode[size];
         for ( HashNode<K,T> nodo : grillaVieja ) {
-            insert(nodo.key, nodo.data);
+            if (nodo != null) {
+                insert(nodo.key, nodo.data);
+            }
         }
     }
 
     @Override
-    public void delete(K key, T data) throws InformacionInvalida {
-        int a = search(key,data);
+    public void delete(K key) throws InformacionInvalida {
+        int a = search(key);
         if (a != -1) {
             grilla[a] = null;
         } else {
@@ -73,12 +80,11 @@ public class HashImpl<K,T> implements Hash<K,T> {
     }
 
     @Override
-    public int search(K key, T data) {
-        HashNode<K,T> nodo = new HashNode<>(key,data);
+    public int search(K key) {
         int a = -1;
         for (int i = 0; i < size; i++) {
             if (grilla[i] != null) {
-                if (grilla[i].equals(nodo)) {
+                if (grilla[i].getKey().equals(key)) {
                     a = i;
                 }
             }
@@ -87,16 +93,18 @@ public class HashImpl<K,T> implements Hash<K,T> {
     }
 
     @Override
-    public HashNode<K, T> searchNodo(K key, T data) {
-        HashNode<K,T> nodo = new HashNode<>(key,data);
+    public HashNode<K, T> searchNodo(K key) {
         int a = -1;
         for (int i = 0; i < size; i++) {
             if (grilla[i] != null) {
-                if (grilla[i].equals(nodo)) {
+                if (grilla[i].getKey().equals(key)) {
                     a = i;
                 }
             }
         }
-        return grilla[a];
+        if ( a != -1) {
+            return grilla[a];
+        }
+        return null;
     }
 }

@@ -1,21 +1,20 @@
 import Entities.Song;
 import Funciones.CSVReader;
 import uy.edu.um.prog2.adt.Exceptions.InformacionInvalida;
-import uy.edu.um.prog2.adt.binarytree.MySearchBinaryTree;
 import uy.edu.um.prog2.adt.hash.HashImpl;
 import uy.edu.um.prog2.adt.linkedlist.MyList;
 
 
 import java.util.Scanner;
 
-import static Funciones.CSVReader.CSVLoader;
 import static Funciones.Top10.top10;
 
 public class Menu {
 
     public static void main(String[] args) throws InformacionInvalida {
 
-        HashImpl<String[], MyList<Song>> hashDP = CSVReader.getHashDP();
+        CSVReader C = new CSVReader();
+        HashImpl<String, HashImpl<String,MyList<Song>>> hashDP = C.getHashDP();
 
 
         while (1 == 1) {
@@ -29,6 +28,7 @@ public class Menu {
                 System.out.println("Indique el dia");
                 String dia = scanner.next();
                 top10(pais,dia,hashDP);
+                System.out.println();
             }
             else if (opcion == 2) {
             }

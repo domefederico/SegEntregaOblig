@@ -6,9 +6,9 @@ public interface Hash<K,T> {
 
     void insert(K key,T data) throws InformacionInvalida;
 
-    void delete(K key,T data) throws InformacionInvalida;
+    void delete(K key) throws InformacionInvalida;
 
-    int search(K key,T data);
+    int search(K key);
 
-    HashNode<K,T> searchNodo(K key,T data);
+    HashNode<K,T> searchNodo(K key);
 }
