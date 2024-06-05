@@ -4,7 +4,7 @@ public class Song {
 
     private String spotifyId;
     private String name;
-    private String[] artists;
+    private String artists;
     private int dailyRank;
     private int dailyMovement;
     private int weeklyMovement;
@@ -14,7 +14,7 @@ public class Song {
 
 
     // Constructor
-    public Song(String spotifyId, String name, String[] artists, int dailyRank, int dailyMovement, int weeklyMovement,
+    public Song(String spotifyId, String name, String artists, int dailyRank, int dailyMovement, int weeklyMovement,
                 String country, String snapshotDate, float tempo) {
         this.spotifyId = spotifyId;
         this.name = name;
@@ -38,7 +38,7 @@ public class Song {
         return name;
     }
 
-    public String[] getArtists() {
+    public String getArtists() {
         return artists;
     }
 

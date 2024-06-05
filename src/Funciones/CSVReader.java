@@ -10,6 +10,7 @@ import uy.edu.um.prog2.adt.linkedlist.MyList;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
+import java.util.Objects;
 
 
 public class CSVReader {
@@ -22,12 +23,19 @@ public class CSVReader {
         return hashDP;
     }
 
+    private HashImpl<Float,MyList<Song>> hashT;
+    public void setHashT(HashImpl<Float, MyList<Song>> hash){
+        this.hashT = hash;
+    }
+    public HashImpl<Float,MyList<Song>> getHashT() {
+        return hashT;
+    }
+
     public CSVReader() {
         String line;
         HashImpl<String, HashImpl<String,MyList<Song>>> hash = new HashImpl<>(10);
-
-
-        try (BufferedReader br = new BufferedReader(new FileReader("C:\\Users\\juan.LAPTOP-CFOLLE\\Desktop\\Facultad\\Tercer Semestre\\Programacion II\\Obligatorio\\SegEntregaOblig\\data_set_test.csv"))) {
+        HashImpl<Float,MyList<Song>> ht = new HashImpl<>(10);
+        try (BufferedReader br = new BufferedReader(new FileReader("data_set_test.csv"))) {
             //Lee la primer linea, que no nos importa
             br.readLine();
 
@@ -63,25 +71,28 @@ public class CSVReader {
 
                 //Separa y crea los artistas
                 String[] arts = fields[2].split("\\{");
+                String artists=arts[0];
                 for (String art : arts) {
                     new Artist(art);
+                    if (!Objects.equals(art, arts[0])) {
+                        artists = artists + "," + art;
+                    }
                 }
 
                 // Crear la Song
                 Song song = new Song(
-                        fields[0], // spotifyId
-                        fields[1], // name
-                        arts, // artists
+                        fields[0],                   // spotifyId
+                        fields[1],                   // name
+                        artists,                     // artists
                         Integer.parseInt(fields[3]), // dailyRank
                         Integer.parseInt(fields[4]), // dailyMovement
                         Integer.parseInt(fields[5]), // weeklyMovement
-                        fields[6], // country
-                        fields[7], // snapshotDate
+                        fields[6],                   // country
+                        fields[7],                   // snapshotDate
                         Float.parseFloat(fields[23]) // tempo
                 );
 
-                //Agrega la cancion al hash
-
+                //Agrega la cancion a los hash
                 if(hash.search(song.getSnapshotDate()) == -1) {
                     hash.insert(song.getSnapshotDate(), new HashImpl<>(10));
                 }
@@ -90,12 +101,13 @@ public class CSVReader {
                 }
                 hash.searchNodo(song.getSnapshotDate()).getData().searchNodo(song.getCountry()).getData().add(song);
 
-
-
-
-
+                if(ht.search(song.getTempo()) == -1){
+                    ht.insert(song.getTempo(), new MyLinkedListImpl<>());
+                }
+                ht.searchNodo(song.getTempo()).getData().add(song);
             }
         } catch (IOException e) {e.printStackTrace();}
         setHashDP(hash);
+        setHashT(ht);
     }
 }
