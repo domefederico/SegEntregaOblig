@@ -18,24 +18,9 @@ import java.io.IOException;
 public class CSVReader {
 
     private static HashImpl<String[], MyList<Song>> hashDP;
-
-    private static MySearchBinaryTree<Integer, Song> songstree;
-
     public static HashImpl<String[], MyList<Song>> getHashDP() {
         CSVLoader();
         return hashDP;
-    }
-
-    public void setHashDP(HashImpl<String[], MyList<Song>> hashDP) {
-        this.hashDP = hashDP;
-    }
-
-    public static MySearchBinaryTree<Integer, Song> getSongstree() {
-        return songstree;
-    }
-
-    public void setSongstree(MySearchBinaryTree<Integer, Song> songstree) {
-        this.songstree = songstree;
     }
 
     public static void CSVLoader() {
@@ -78,12 +63,6 @@ public class CSVReader {
                 line = line.replace("324763,3.14", "324763,3,14");
                 line = line.replace("1.2.3 Soleil", "1,2,3 Soleil");
 
-//
-//                //Elimina las comillas dobles
-//                for (int i = 0; i < fields.length; i++) {
-//                    fields[i] = fields[i].replace("\"", "");
-//                }
-
                 //Separa y crea los artistas
                 String[] arts = fields[2].split("\\{");
                 for (String art : arts) {
@@ -119,9 +98,7 @@ public class CSVReader {
                         Integer.parseInt(fields[24])  // timeSignature
                 );
 
-                //Agrega la cancion al hash y al arbol
-                songstree.add(1,song);
-
+                //Agrega la cancion al hash
                 String[] clave = new String[2];
                 clave[0] = song.getCountry();
                 clave[1] = song.getSnapshotDate();

@@ -16,7 +16,6 @@ public class Menu {
     public static void main(String[] args) throws InformacionInvalida {
 
         HashImpl<String[], MyList<Song>> hashDP = CSVReader.getHashDP();
-        MySearchBinaryTree<Integer, Song> songstree = CSVReader.getSongstree();
 
 
         while (1 == 1) {
