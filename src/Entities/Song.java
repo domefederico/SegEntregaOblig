@@ -5,6 +5,7 @@ public class Song {
     private String spotifyId;
     private String name;
     private String artists;
+    private String[] artistsarray;
     private int dailyRank;
     private int dailyMovement;
     private int weeklyMovement;
@@ -14,11 +15,12 @@ public class Song {
 
 
     // Constructor
-    public Song(String spotifyId, String name, String artists, int dailyRank, int dailyMovement, int weeklyMovement,
+    public Song(String spotifyId, String name, String artists, String[] artistarray, int dailyRank, int dailyMovement, int weeklyMovement,
                 String country, String snapshotDate, float tempo) {
         this.spotifyId = spotifyId;
         this.name = name;
         this.artists = artists;
+        this.artistsarray = artistarray;
         this.dailyRank = dailyRank;
         this.dailyMovement = dailyMovement;
         this.weeklyMovement = weeklyMovement;
@@ -64,5 +66,9 @@ public class Song {
 
     public float getTempo() {
         return tempo;
+    }
+
+    public String[] getArtistsarray() {
+        return artistsarray;
     }
 }

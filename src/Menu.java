@@ -1,14 +1,14 @@
 import Entities.Song;
 import Funciones.CSVReader;
-import uy.edu.um.prog2.adt.Exceptions.InformacionInvalida;
 import uy.edu.um.prog2.adt.hash.HashImpl;
 import uy.edu.um.prog2.adt.linkedlist.MyList;
 
 
 import java.util.Scanner;
 
+import static Funciones.CantArtTop50.cat;
 import static Funciones.CantSongsTempo.cst;
-import static Funciones.Top10.top10;
+import static Funciones.Top.top;
 
 public class Menu {
 
@@ -18,7 +18,7 @@ public class Menu {
         CSVReader C = new CSVReader();
         HashImpl<String, HashImpl<String,MyList<Song>>> hashDP = C.getHashDP();
         HashImpl<Float,MyList<Song>> hashT = C.getHashT();
-
+        MyList<String> paises = C.getPaises();
 
         while (1 == 1) {
             Scanner scanner = new Scanner(System.in);
@@ -29,7 +29,7 @@ public class Menu {
                 String pais = scanner.next();
                 System.out.println("Indique la fecha");
                 String dia = scanner.next();
-                MyList<Song> listac = top10(pais,dia,hashDP);
+                MyList<Song> listac = top(pais,dia,hashDP);
                 System.out.println("\n");
                 int i = 0;
                 while (listac.size()>i){
@@ -42,10 +42,20 @@ public class Menu {
                 System.out.println("\n------------------------------------------------\n");
             }
             else if (opcion == 2) {
+                System.out.println("\n------------------------------------------------\n");
             }
             else if (opcion == 3) {
+                System.out.println("\n------------------------------------------------\n");
             }
             else if (opcion == 4) {
+                scanner.nextLine();
+                System.out.println("Indique el artista");
+                String artista = scanner.nextLine();
+                artista = artista.toLowerCase();
+                System.out.println("Indique la fecha");
+                String fecha = scanner.next();
+                System.out.println(artista + " aparecio " + cat(artista, fecha, hashDP, paises) + " veces en tops 50 en la fecha ingresada");
+                System.out.println("\n------------------------------------------------\n");
             }
             else if (opcion == 5) {
                 System.out.println("Indique el tempo");
@@ -55,6 +65,7 @@ public class Menu {
                 System.out.println("Indique la fecha de finalizacion");
                 String fecha1 = scanner.next();
                 System.out.println("Existen " + cst(tempo, fecha0, fecha1, hashT) + " canciones con el tempo ingresado.");
+                System.out.println("\n------------------------------------------------\n");
             }
             else if (opcion == 0) { break; }
             else { System.out.println("Ingrese un numero del 1 al 5"); }

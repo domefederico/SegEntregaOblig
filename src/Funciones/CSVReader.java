@@ -31,11 +31,21 @@ public class CSVReader {
         return hashT;
     }
 
+    private MyList<String> paises;
+    public void setPaises(MyList<String> paises){
+        this.paises = paises;
+    }
+    public MyList<String> getPaises(){
+        return paises;
+    }
+
     public CSVReader() {
         String line;
         HashImpl<String, HashImpl<String,MyList<Song>>> hash = new HashImpl<>(10);
         HashImpl<Float,MyList<Song>> ht = new HashImpl<>(10);
-        try (BufferedReader br = new BufferedReader(new FileReader("data_set_test.csv"))) {
+        MyList<String> lp = new MyLinkedListImpl<>();
+
+        try (BufferedReader br = new BufferedReader(new FileReader("data_set.csv"))) {
             //Lee la primer linea, que no nos importa
             br.readLine();
 
@@ -73,10 +83,16 @@ public class CSVReader {
                 String[] arts = fields[2].split("\\{");
                 String artists=arts[0];
                 for (String art : arts) {
+                    art = art.toLowerCase();
                     new Artist(art);
                     if (!Objects.equals(art, arts[0])) {
-                        artists = artists + "," + art;
+                        artists = artists + ", " + art;
                     }
+                }
+
+                //Agrega los paises a la lista de paises
+                if (!lp.contains(fields[6])) {
+                    lp.add(fields[6]);
                 }
 
                 // Crear la Song
@@ -84,6 +100,7 @@ public class CSVReader {
                         fields[0],                   // spotifyId
                         fields[1],                   // name
                         artists,                     // artists
+                        arts,                        //artistsarray
                         Integer.parseInt(fields[3]), // dailyRank
                         Integer.parseInt(fields[4]), // dailyMovement
                         Integer.parseInt(fields[5]), // weeklyMovement
@@ -109,5 +126,6 @@ public class CSVReader {
         } catch (IOException e) {e.printStackTrace();}
         setHashDP(hash);
         setHashT(ht);
+        setPaises(lp);
     }
 }
