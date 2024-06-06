@@ -83,8 +83,8 @@ public class CSVReader {
                 String[] arts = fields[2].split("\\{");
                 String artists=arts[0];
                 for (String art : arts) {
-                    art = art.toLowerCase();
-                    new Artist(art);
+                    art = art;
+                    //new Artist(art);
                     if (!Objects.equals(art, arts[0])) {
                         artists = artists + ", " + art;
                     }

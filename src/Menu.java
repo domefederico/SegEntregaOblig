@@ -1,9 +1,12 @@
 import Entities.Song;
 import Funciones.CSVReader;
+import org.jline.terminal.Terminal;
+import org.jline.terminal.TerminalBuilder;
 import uy.edu.um.prog2.adt.hash.HashImpl;
 import uy.edu.um.prog2.adt.linkedlist.MyList;
 
 
+import java.io.IOException;
 import java.util.Scanner;
 
 import static Funciones.CantArtTop50.cat;
@@ -12,13 +15,33 @@ import static Funciones.Top.top;
 
 public class Menu {
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws InterruptedException, IOException {
         System.out.println("Bienvenido");
+        Terminal terminal = TerminalBuilder.terminal();
+        terminal.writer().print("Aguarde un momento");
+        terminal.flush();
+        Thread.sleep(600);
+        terminal.writer().print("\r\033[2K");
+        terminal.flush();
+        terminal.writer().print("Aguarde un momento.");
+        terminal.flush();
+        Thread.sleep(600);
+        terminal.writer().print("\r\033[2K");
+        terminal.flush();
+        terminal.writer().print("Aguarde un momento..");
+        terminal.flush();
+        Thread.sleep(600);
+        terminal.writer().print("\r\033[2K");
+        terminal.flush();
+        terminal.writer().print("Aguarde un momento...");
+        terminal.flush();
 
         CSVReader C = new CSVReader();
         HashImpl<String, HashImpl<String,MyList<Song>>> hashDP = C.getHashDP();
         HashImpl<Float,MyList<Song>> hashT = C.getHashT();
         MyList<String> paises = C.getPaises();
+        terminal.writer().print("\r\033[2K");
+        terminal.flush();
 
         while (1 == 1) {
             Scanner scanner = new Scanner(System.in);
@@ -51,7 +74,7 @@ public class Menu {
                 scanner.nextLine();
                 System.out.println("Indique el artista");
                 String artista = scanner.nextLine();
-                artista = artista.toLowerCase();
+                artista = artista;
                 System.out.println("Indique la fecha");
                 String fecha = scanner.next();
                 System.out.println(artista + " aparecio " + cat(artista, fecha, hashDP, paises) + " veces en tops 50 en la fecha ingresada");
