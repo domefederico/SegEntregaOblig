@@ -3,6 +3,8 @@ package Funciones;
 import Entities.Artist;
 import Entities.Song;
 
+import uy.edu.um.prog2.adt.binarytree.MySearchBinaryTree;
+import uy.edu.um.prog2.adt.binarytree.MySearchBinaryTreeImpl;
 import uy.edu.um.prog2.adt.hash.HashImpl;
 import uy.edu.um.prog2.adt.linkedlist.MyLinkedListImpl;
 import uy.edu.um.prog2.adt.linkedlist.MyList;
@@ -26,12 +28,12 @@ public class CSVReader {
         return hashDP;
     }
 
-    private HashImpl<Float,MyList<Song>> hashT;
-    public void setHashT(HashImpl<Float, MyList<Song>> hash){
-        this.hashT = hash;
+    private MySearchBinaryTree<Float, MyList<Song>> Treet;
+    public void setTreet(MySearchBinaryTree<Float, MyList<Song>> treet){
+        this.Treet = treet;
     }
-    public HashImpl<Float,MyList<Song>> getHashT() {
-        return hashT;
+    public MySearchBinaryTree<Float, MyList<Song>> getTreet() {
+        return Treet;
     }
 
     public HashImpl<String, MyList<Song>> getHashDT50() {
@@ -53,7 +55,7 @@ public class CSVReader {
     public CSVReader() {
         String line;
         HashImpl<String, HashImpl<String,MyList<Song>>> hash = new HashImpl<>(10);
-        HashImpl<Float,MyList<Song>> ht = new HashImpl<>(10);
+        MySearchBinaryTree<Float, MyList<Song>> Tt = new MySearchBinaryTreeImpl<>();
         MyList<String> lp = new MyLinkedListImpl<>();
         HashImpl<String,MyList<Song>> hashDT = new HashImpl<>(10);
 
@@ -130,10 +132,10 @@ public class CSVReader {
                 }
                 hash.searchNodo(song.getSnapshotDate()).getData().searchNodo(song.getCountry()).getData().add(song);
 
-                if(ht.search(song.getTempo()) == -1){
-                    ht.insert(song.getTempo(), new MyLinkedListImpl<>());
+                if(!Tt.contains(song.getTempo())){
+                    Tt.add(song.getTempo(), new MyLinkedListImpl<>());
                 }
-                ht.searchNodo(song.getTempo()).getData().add(song);
+                Tt.find(song.getTempo()).add(song);
 
                 // agrega las canciones al hashDT
                 if(hashDT.search(song.getSnapshotDate()) == -1) {
@@ -143,7 +145,7 @@ public class CSVReader {
             }
         } catch (IOException e) {e.printStackTrace();}
         setHashDP(hash);
-        setHashT(ht);
+        setTreet(Tt);
         setPaises(lp);
         setHashDT50(hashDT);
     }
