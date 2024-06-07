@@ -1,6 +1,5 @@
 package Funciones;
 
-import Entities.Artist;
 import Entities.Song;
 
 import uy.edu.um.prog2.adt.binarytree.MySearchBinaryTree;
@@ -54,12 +53,12 @@ public class CSVReader {
 
     public CSVReader() {
         String line;
-        HashImpl<String, HashImpl<String,MyList<Song>>> hash = new HashImpl<>(10);
+        HashImpl<String, HashImpl<String,MyList<Song>>> hash = new HashImpl<>(400);
         MySearchBinaryTree<Float, MyList<Song>> Tt = new MySearchBinaryTreeImpl<>();
         MyList<String> lp = new MyLinkedListImpl<>();
-        HashImpl<String,MyList<Song>> hashDT = new HashImpl<>(10);
+        HashImpl<String,MyList<Song>> hashDT = new HashImpl<>(1000);
 
-        try (BufferedReader br = new BufferedReader(new FileReader("data_set.csv"))) {
+        try (BufferedReader br = new BufferedReader(new FileReader("universal_top_spotify_songs.csv"))) {
             //Lee la primer linea, que no nos importa
             br.readLine();
 
@@ -68,33 +67,11 @@ public class CSVReader {
                 //Borra los ;; del final
                 line = line.substring(1, line.length() - 2);
 
-                //Cambios en las canciones raras
-                line = line.replace(", ","{");
-                line = line.replace("\"","");
-                line = line.replace("Dear My Friend,","Dear My Friend");
-                line = line.replace("Ya no me duele :,)","Ya no me duele");
-                line = line.replace("最後一堂課 - 《媽,別鬧了!》影集片尾曲","最後一堂課 - 《媽別鬧了!》影集片尾曲");
-                line = line.replace("最後一堂課 (《媽,別鬧了!》影集片尾曲)","最後一堂課 (《媽別鬧了!》影集片尾曲)");
-                line = line.replace("Rochy RD,Carlos Boutique Por El Respeto","Rochy RD{Carlos Boutique Por El Respeto");
-                line = line.replace("3,14,Gson","3.14,Gson");
-                line = line.replace("324763,3,14","324763,3.14");
-                line = line.replace("1,2,3 Soleil","1.2.3 Soleil");     // falta darlos vuelta al final
-
                 // Separa por la coma
-                String[] fields = line.split(",");
-
-                //deshace los cambios
-                line = line.replace("Dear My Friend", "Dear My Friend,");
-                line = line.replace("Ya no me duele", "Ya no me duele :,)");
-                line = line.replace("最後一堂課 - 《媽別鬧了!》影集片尾曲", "最後一堂課 - 《媽,別鬧了!》影集片尾曲");
-                line = line.replace("最後一堂課 (《媽別鬧了!》影集片尾曲)", "最後一堂課 (《媽,別鬧了!》影集片尾曲)");
-                line = line.replace("Rochy RD{Carlos Boutique Por El Respeto", "Rochy RD,Carlos Boutique Por El Respeto");
-                line = line.replace("3.14,Gson", "3,14,Gson");
-                line = line.replace("324763,3.14", "324763,3,14");
-                line = line.replace("1.2.3 Soleil", "1,2,3 Soleil");
+                String[] fields = line.split("\",\"");
 
                 //Separa y crea los artistas
-                String[] arts = fields[2].split("\\{");
+                String[] arts = fields[2].split(", ");
                 String artists=arts[0];
                 for (String art : arts) {
                     art = art;
@@ -125,7 +102,7 @@ public class CSVReader {
 
                 //Agrega la cancion al hash
                 if(hash.search(song.getSnapshotDate()) == -1) {
-                    hash.insert(song.getSnapshotDate(), new HashImpl<>(10));
+                    hash.insert(song.getSnapshotDate(), new HashImpl<>(100));
                 }
                 if(hash.searchNodo(song.getSnapshotDate()).getData().search(song.getCountry()) == -1){
                     hash.searchNodo(song.getSnapshotDate()).getData().insert(song.getCountry(), new MyLinkedListImpl<>());
@@ -138,6 +115,7 @@ public class CSVReader {
                 Tt.find(song.getTempo()).add(song);
 
                 // agrega las canciones al hashDT
+
                 if(hashDT.search(song.getSnapshotDate()) == -1) {
                     hashDT.insert(song.getSnapshotDate(), new MyLinkedListImpl<>());
                 }

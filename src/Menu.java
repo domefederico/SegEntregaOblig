@@ -73,7 +73,6 @@ public class Menu {
                 String fecha = scanner.next();
                 MyList<Song> lista = hashDT50(fecha,hashDT50);
 
-
                 System.out.println("\n------------------------------------------------\n");
             }
             else if (opcion == 3) {
