@@ -87,6 +87,31 @@ public class MyLinkedListImpl<T> implements MyList<T>, MyQueue<T>, MyStack<T> {
         return valueToReturn;
     }
 
+    public Node<T> getNodo(int position) {
+        Node<T> valueToReturn = null;
+        int tempPosition = 0;
+        Node<T> temp = this.first;
+
+        // Se busca el nodo que corresponde con la posicion
+        while (temp != null && tempPosition != position) {
+
+            temp = temp.getNext();
+            tempPosition++;
+
+        }
+
+        // si se encontro la posicion se retorna el valor
+        // en caso que se haya llegado al final y no se llego a la posicion se retorna null
+        if (tempPosition == position) {
+
+
+            valueToReturn = temp;
+
+        }
+
+        return valueToReturn;
+    }
+
     public boolean contains(T value) {
         boolean contains = false;
         Node<T> temp = this.first;
@@ -180,6 +205,11 @@ public class MyLinkedListImpl<T> implements MyList<T>, MyQueue<T>, MyStack<T> {
         }
 
         return size;
+    }
+
+    public void sort() {
+        Node<T> pivot = this.getNodo(this.size()/2);
+
     }
 
     // Operaciones particulares a Queue

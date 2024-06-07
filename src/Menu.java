@@ -72,6 +72,9 @@ public class Menu {
                 System.out.println("Indique la fecha");
                 String fecha = scanner.next();
                 MyList<Song> lista = hashDT50(fecha,hashDT50);
+                for (int i = 0; i<=5; i++){
+                    System.out.println(lista.get(i).getName());
+                }
 
                 System.out.println("\n------------------------------------------------\n");
             }
