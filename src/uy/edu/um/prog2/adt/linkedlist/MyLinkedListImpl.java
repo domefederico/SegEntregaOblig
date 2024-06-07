@@ -9,6 +9,10 @@ public class MyLinkedListImpl<T> implements MyList<T>, MyQueue<T>, MyStack<T> {
 
     private Node<T> first;
 
+    public Node<T> getFirst() {
+        return first;
+    }
+
     private Node<T> last;
 
     public MyLinkedListImpl() {

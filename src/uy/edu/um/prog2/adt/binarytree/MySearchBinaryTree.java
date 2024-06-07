@@ -3,6 +3,7 @@
  */
 package uy.edu.um.prog2.adt.binarytree;
 
+import Entities.Song;
 import uy.edu.um.prog2.adt.linkedlist.MyList;
 
 public interface MySearchBinaryTree<K extends Comparable<K>, V> {
@@ -16,6 +17,8 @@ public interface MySearchBinaryTree<K extends Comparable<K>, V> {
 	V find(K key);
 
 	MyList<K> inOrder();
+
+	MyList<TreeNode<K,V>> inOrderNode();
 
 	MyList<K> postOrder();
 

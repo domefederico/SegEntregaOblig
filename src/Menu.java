@@ -3,6 +3,7 @@ import Funciones.CSVReader;
 import Funciones.DiaTop50;
 import org.jline.terminal.Terminal;
 import org.jline.terminal.TerminalBuilder;
+import uy.edu.um.prog2.adt.binarytree.MySearchBinaryTree;
 import uy.edu.um.prog2.adt.hash.HashImpl;
 import uy.edu.um.prog2.adt.linkedlist.MyList;
 
@@ -40,7 +41,7 @@ public class Menu {
 
         CSVReader C = new CSVReader();
         HashImpl<String, HashImpl<String,MyList<Song>>> hashDP = C.getHashDP();
-        HashImpl<Float,MyList<Song>> hashT = C.getHashT();
+        MySearchBinaryTree<Float, MyList<Song>> Treet = C.getTreet();
         MyList<String> paises = C.getPaises();
         terminal.writer().print("\r\033[2K");
         terminal.flush();
@@ -85,17 +86,19 @@ public class Menu {
                 artista = artista;
                 System.out.println("Indique la fecha");
                 String fecha = scanner.next();
-                System.out.println(artista + " aparecio " + cat(artista, fecha, hashDP, paises) + " veces en tops 50 en la fecha ingresada");
+                System.out.println("\n" + artista + " aparecio " + cat(artista, fecha, hashDP, paises) + " veces en tops 50 en la fecha ingresada");
                 System.out.println("\n------------------------------------------------\n");
             }
             else if (opcion == 5) {
-                System.out.println("Indique el tempo");
-                Float tempo = Float.parseFloat(scanner.next());
+                System.out.println("Indique el tempo minimo");
+                Float tempo0 = Float.parseFloat(scanner.next());
+                System.out.println("Indique el tempo maximo");
+                Float tempo1 = Float.parseFloat(scanner.next());
                 System.out.println("Indique la fecha de inicio");
                 String fecha0 = scanner.next();
                 System.out.println("Indique la fecha de finalizacion");
                 String fecha1 = scanner.next();
-                System.out.println("Existen " + cst(tempo, fecha0, fecha1, hashT) + " canciones con el tempo ingresado.");
+                System.out.println("\nExisten " + cst(tempo0, tempo1, fecha0, fecha1, Treet) + " canciones con un tempo entre " + tempo0 + " y " + tempo1 + " en el rango de fechas entre " + fecha0 + " y " + fecha1);
                 System.out.println("\n------------------------------------------------\n");
             }
             else if (opcion == 0) { break; }

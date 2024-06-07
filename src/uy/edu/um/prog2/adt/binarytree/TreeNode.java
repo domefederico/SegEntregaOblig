@@ -106,6 +106,23 @@ public class TreeNode<K extends Comparable<K>, V> {
 
 		}
 	}
+
+	public void inOrderTraverseNode(MyList<TreeNode<K,V>> traverse) {
+		if (left != null) {
+
+			left.inOrderTraverseNode(traverse);
+
+		}
+
+		traverse.add(this);
+
+		if (right != null) {
+
+			right.inOrderTraverseNode(traverse);
+
+		}
+	}
+
 	//postOrden
 	public void postOrderTraverse(MyList<K> traverse) {
 		if (left != null) {

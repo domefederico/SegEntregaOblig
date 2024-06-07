@@ -113,6 +113,19 @@ public class MySearchBinaryTreeImpl<K extends Comparable<K>, V> implements
 		return inOrderTraverse;
 	}
 
+	@Override
+	public MyList<TreeNode<K,V>> inOrderNode() {
+		MyList<TreeNode<K,V>> inOrderTraverseNode = new MyLinkedListImpl<>();
+
+		if (root != null) {
+
+			root.inOrderTraverseNode(inOrderTraverseNode);
+
+		}
+
+		return inOrderTraverseNode;
+	}
+
 	public MyList<K> postOrder() {
 		MyList<K> postOrderTraverse = new MyLinkedListImpl<>();
 
