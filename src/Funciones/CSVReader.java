@@ -16,6 +16,9 @@ import java.util.Objects;
 public class CSVReader {
 
     private HashImpl<String, HashImpl<String,MyList<Song>>> hashDP;
+
+    private HashImpl<String, MyList<Song>> hashDT50;
+
     public void setHashDP(HashImpl<String, HashImpl<String,MyList<Song>>> hash){
         this.hashDP = hash;
     }
@@ -31,6 +34,14 @@ public class CSVReader {
         return hashT;
     }
 
+    public HashImpl<String, MyList<Song>> getHashDT50() {
+        return hashDT50;
+    }
+
+    public void setHashDT50(HashImpl<String, MyList<Song>> hashDT50) {
+        this.hashDT50 = hashDT50;
+    }
+
     private MyList<String> paises;
     public void setPaises(MyList<String> paises){
         this.paises = paises;
@@ -44,6 +55,7 @@ public class CSVReader {
         HashImpl<String, HashImpl<String,MyList<Song>>> hash = new HashImpl<>(10);
         HashImpl<Float,MyList<Song>> ht = new HashImpl<>(10);
         MyList<String> lp = new MyLinkedListImpl<>();
+        HashImpl<String,MyList<Song>> hashDT = new HashImpl<>(10);
 
         try (BufferedReader br = new BufferedReader(new FileReader("data_set.csv"))) {
             //Lee la primer linea, que no nos importa
@@ -109,7 +121,7 @@ public class CSVReader {
                         Float.parseFloat(fields[23]) // tempo
                 );
 
-                //Agrega la cancion a los hash
+                //Agrega la cancion al hash
                 if(hash.search(song.getSnapshotDate()) == -1) {
                     hash.insert(song.getSnapshotDate(), new HashImpl<>(10));
                 }
@@ -122,10 +134,17 @@ public class CSVReader {
                     ht.insert(song.getTempo(), new MyLinkedListImpl<>());
                 }
                 ht.searchNodo(song.getTempo()).getData().add(song);
+
+                // agrega las canciones al hashDT
+                if(hashDT.search(song.getSnapshotDate()) == -1) {
+                    hashDT.insert(song.getSnapshotDate(), new MyLinkedListImpl<>());
+                }
+                hashDT.searchNodo(song.getSnapshotDate()).getData().add(song);
             }
         } catch (IOException e) {e.printStackTrace();}
         setHashDP(hash);
         setHashT(ht);
         setPaises(lp);
+        setHashDT50(hashDT);
     }
 }

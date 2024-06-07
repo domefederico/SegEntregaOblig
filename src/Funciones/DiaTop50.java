@@ -6,11 +6,8 @@ import uy.edu.um.prog2.adt.linkedlist.MyList;
 
 public class DiaTop50 {
 
-    public static HashImpl<String, MyList<Song>> hashDT50() {
-        HashImpl<String, MyList<Song>> hash = new HashImpl<>(10);
+    public static MyList<Song> hashDT50(String fecha, HashImpl<String, MyList<Song>> hashDT50) {
 
-
-        return hash;
+        return null;
     }
-
 }

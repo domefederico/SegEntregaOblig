@@ -1,5 +1,6 @@
 import Entities.Song;
 import Funciones.CSVReader;
+import Funciones.DiaTop50;
 import org.jline.terminal.Terminal;
 import org.jline.terminal.TerminalBuilder;
 import uy.edu.um.prog2.adt.hash.HashImpl;
@@ -11,6 +12,7 @@ import java.util.Scanner;
 
 import static Funciones.CantArtTop50.cat;
 import static Funciones.CantSongsTempo.cst;
+import static Funciones.DiaTop50.hashDT50;
 import static Funciones.Top.top;
 
 public class Menu {
@@ -42,6 +44,7 @@ public class Menu {
         MyList<String> paises = C.getPaises();
         terminal.writer().print("\r\033[2K");
         terminal.flush();
+        HashImpl<String,MyList<Song>> hashDT50 = C.getHashDT50();
 
         while (1 == 1) {
             Scanner scanner = new Scanner(System.in);
@@ -65,6 +68,11 @@ public class Menu {
                 System.out.println("\n------------------------------------------------\n");
             }
             else if (opcion == 2) {
+                System.out.println("Indique la fecha");
+                String fecha = scanner.next();
+                MyList<Song> lista = hashDT50(fecha,hashDT50);
+
+
                 System.out.println("\n------------------------------------------------\n");
             }
             else if (opcion == 3) {
