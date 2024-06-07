@@ -1,6 +1,6 @@
 package Entities;
 
-public class Song {
+public class Song implements Comparable<Song> {
 
     private String spotifyId;
     private String name;
@@ -70,5 +70,10 @@ public class Song {
 
     public String[] getArtistsarray() {
         return artistsarray;
+    }
+
+    @Override
+    public int compareTo(Song o) {
+        return 0;
     }
 }

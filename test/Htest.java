@@ -20,26 +20,26 @@ public class Htest {
 
     @Test
     public void AddTest() {
-        assertEquals(hash.search(1,5),1);            // 1 es el absoluto del codigo del nodo
-        assertEquals(hash.search(3,5),3);            // 3 es el absoluto del codigo del nodo
-        assertEquals(hash.search(5,5),2);            // 5 es el absoluto del codigo del nodo, pero lo desplaza al 2
-        assertEquals(hash.search(2,5),0);            // 2 es el absoluto del codigo del nodo, 3 ya esta el 3, va al 0
+        assertEquals(hash.search(1),1);            // 1 es el absoluto del codigo del nodo
+        assertEquals(hash.search(3),3);            // 3 es el absoluto del codigo del nodo
+        assertEquals(hash.search(5),2);            // 5 es el absoluto del codigo del nodo, pero lo desplaza al 2
+        assertEquals(hash.search(2),0);            // 2 es el absoluto del codigo del nodo, 3 ya esta el 3, va al 0
     }
 
     @Test
     public void DeleteTest() throws InformacionInvalida {
-        hash.delete(1,5);
-        assertEquals(hash.search(1,5),-1 );
-        hash.delete(3,5);
-        assertEquals(hash.search(3,5),-1 );
+        hash.delete(1);
+        assertEquals(hash.search(1),-1 );
+        hash.delete(3);
+        assertEquals(hash.search(3),-1 );
     }
 
     @Test
     public void SearchTest() {
-        assertEquals(hash.search(1,5),1);            // 1 es el absoluto del codigo del nodo
-        assertEquals(hash.search(3,5),3);            // 3 es el absoluto del codigo del nodo
-        assertEquals(hash.search(5,5),2);            // 5 es el absoluto del codigo del nodo, pero lo desplaza al 2
-        assertEquals(hash.search(2,5),0);            // 2 es el absoluto del codigo del nodo, 3 ya esta el 3, va al 0
+        assertEquals(hash.search(1),1);            // 1 es el absoluto del codigo del nodo
+        assertEquals(hash.search(3),3);            // 3 es el absoluto del codigo del nodo
+        assertEquals(hash.search(5),2);            // 5 es el absoluto del codigo del nodo, pero lo desplaza al 2
+        assertEquals(hash.search(2),0);            // 2 es el absoluto del codigo del nodo, 3 ya esta el 3, va al 0
 
     }
 

@@ -1,6 +1,6 @@
 package uy.edu.um.prog2.adt.linkedlist;
 
-public class Node<T> {
+public class Node<T extends Comparable<T>> {
 
     private T value;
 
@@ -28,6 +28,10 @@ public class Node<T> {
     public void setNext(Node<T> next) {
         this.next = next;
     }
+
+    public boolean menorque(Node<T> menor){ return this.getValue().compareTo(menor.getValue())<0; }
+
+    public boolean mayorque(Node<T> menor){ return this.getValue().compareTo(menor.getValue())>0; }
 
     public int getPriority() {
         return priority;

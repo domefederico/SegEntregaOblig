@@ -5,7 +5,7 @@ import uy.edu.um.prog2.adt.queue.MyQueue;
 import uy.edu.um.prog2.adt.stack.EmptyStackException;
 import uy.edu.um.prog2.adt.stack.MyStack;
 
-public class MyLinkedListImpl<T> implements MyList<T>, MyQueue<T>, MyStack<T> {
+public class MyLinkedListImpl<T extends Comparable<T>> implements MyList<T>, MyQueue<T>, MyStack<T> {
 
     private Node<T> first;
 
@@ -207,9 +207,34 @@ public class MyLinkedListImpl<T> implements MyList<T>, MyQueue<T>, MyStack<T> {
         return size;
     }
 
-    public void sort() {
-        Node<T> pivot = this.getNodo(this.size()/2);
+    public MyList<T> sort() {
+        MyList<T> returnlist = new MyLinkedListImpl<>();
+        if (this.size()==0){}
+        else if (this.size()==1){ returnlist.add(this.getFirst().getValue()); }
+        else {
+            Node<T> pivot = this.getNodo(this.size() / 2);
+            MyList<T> left = new MyLinkedListImpl<>();
+            MyList<T> right = new MyLinkedListImpl<>();
 
+            for (int i = 0; i < this.size(); i++) {
+                if (this.getNodo(i).menorque(pivot)) {
+                    left.add(this.getNodo(i).getValue());
+                }
+                if (this.getNodo(i).mayorque(pivot)) {
+                    right.add(this.getNodo(i).getValue());
+                }
+            }
+            left = left.sort();
+            right = right.sort();
+            for (int l = 0; l < left.size(); l++) {
+                returnlist.add(left.get(l));
+            }
+            returnlist.add(pivot.getValue());
+            for (int r = 0; r < right.size(); r++) {
+                returnlist.add(right.get(r));
+            }
+        }
+        return returnlist;
     }
 
     // Operaciones particulares a Queue

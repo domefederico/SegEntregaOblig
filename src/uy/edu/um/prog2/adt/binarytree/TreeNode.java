@@ -5,7 +5,7 @@ package uy.edu.um.prog2.adt.binarytree;
 
 import uy.edu.um.prog2.adt.linkedlist.MyList;
 
-public class TreeNode<K extends Comparable<K>, V> {
+public class TreeNode<K extends Comparable<K>, V> implements Comparable<TreeNode<K, V>> {
 
 	private K key;
 	
@@ -195,4 +195,8 @@ public class TreeNode<K extends Comparable<K>, V> {
 		return oReturn;
 	}
 
+	@Override
+	public int compareTo(TreeNode<K, V> o) {
+		return 0;
+	}
 }

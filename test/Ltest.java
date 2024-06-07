@@ -7,40 +7,40 @@ import static org.junit.Assert.*;
 
 public class Ltest {
 
-    public MyList<String> list = null;
+    public MyList<Integer> list = null;
 
     @Before
     public void initlist() {
         list = new MyLinkedListImpl<>();
-        list.add("Uno");
-        list.add("Dos");
-        list.add("Tres");
-        list.add("Cuatro");
+        list.add(1);
+        list.add(2);
+        list.add(3);
+        list.add(4);
     }
     @Test
     public void AddTest(){
-        String s = "Uno";
-        String d = "Tres";
+        Integer s = 1;
+        Integer d = 3;
         assertEquals(s,list.get(0));
         assertEquals(d,list.get(2));
     }
 
     @Test
     public void GetTest(){
-        String f = "Uno";
-        String g = "Dos";
+        Integer f = 1;
+        Integer g = 2;
         assertEquals(f,list.get(0));
         assertEquals(g,list.get(1));
     }
 
     @Test
     public void RemoveTest(){
-        String g = "Dos";
-        list.remove("Uno");
+        Integer g = 2;
+        list.remove(1);
         assertEquals(g,list.get(0));
 
-        String h = "Cuatro";
-        list.remove("Tres");
+        Integer h = 4;
+        list.remove(3);
         assertEquals(h,list.get(1));
     }
 
@@ -48,7 +48,23 @@ public class Ltest {
     public void SizeTest(){
         assertEquals(4,list.size());
 
-        list.remove("Cuatro");
+        list.remove(4);
         assertEquals(3,list.size());
     }
+
+    @Test
+    public void SortTest(){
+        list.remove(1);
+        list.add(1);
+        list = list.sort();
+        Integer u = 1;
+        Integer d = 2;
+        Integer t = 3;
+        Integer c = 4;
+        assertEquals(list.get(0),u);
+        assertEquals(list.get(1),d);
+        assertEquals(list.get(2),t);
+        assertEquals(list.get(3),c);
+    }
+
 }

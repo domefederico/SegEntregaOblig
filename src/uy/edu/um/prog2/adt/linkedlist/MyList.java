@@ -1,6 +1,6 @@
 package uy.edu.um.prog2.adt.linkedlist;
 
-public interface MyList<T> {
+public interface MyList<T extends Comparable<T>> {
 
     Node<T> getFirst();
 
@@ -13,5 +13,7 @@ public interface MyList<T> {
     void remove(T value);
 
     int size();
+
+    MyList<T> sort();
 
 }
