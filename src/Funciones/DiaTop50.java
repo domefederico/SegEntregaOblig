@@ -1,18 +1,23 @@
 package Funciones;
 
 import Entities.Song;
+import uy.edu.um.prog2.adt.Exceptions.InformacionInvalida;
 import uy.edu.um.prog2.adt.hash.HashImpl;
 import uy.edu.um.prog2.adt.linkedlist.MyLinkedListImpl;
 import uy.edu.um.prog2.adt.linkedlist.MyList;
 
 public class DiaTop50 {
 
-    public static MyList<Song> hashDT50(String fecha, HashImpl<String, MyList<Song>> hash1) {
+    public static MyList<Song> hashDT50(String fecha, HashImpl<String, MyList<Song>> hash1) throws InformacionInvalida {
         MyList<Song> lista = hash1.searchNodo(fecha).getData();
         HashImpl<Song,Integer> hash = new HashImpl<>(100);
         MyList<Song> top5 = new MyLinkedListImpl<>();
 
-        for (int i = 0; i <= lista.size(); i++) {
+        if (lista.size() == 0) {
+            throw new InformacionInvalida();
+        }
+
+        for (int i = 0; i < lista.size(); i++) {
             if (hash.search(lista.get(i)) == -1) {
                 hash.insert(lista.get(i),0);
             }
@@ -20,19 +25,13 @@ public class DiaTop50 {
             hash.searchNodo(lista.get(i)).setData(var+1);
             int var2 = hash.searchNodo(lista.get(i)).getData();
 
-            if (var2 > hash.searchNodo(top5.get(0)).getData()) {
-                if (var2 > hash.searchNodo(top5.get(1)).getData()) {
-                    if (var2 > hash.searchNodo(top5.get(2)).getData()) {
-                        if (var2 > hash.searchNodo(top5.get(3)).getData()) {
-                            if (var2 > hash.searchNodo(top5.get(4)).getData()) {
-                                top5.add(lista.get(i));
-                            }
-                        }
-                    }
-                }
-                top5.remove(top5.get(5));
+            top5.sort();
+            if (top5.size() < 5) {
+                top5.add(hash.searchNodo(lista.get(i)).getKey());
+            } else if (var2 > hash.searchNodo(top5.get(0)).getData()) {
+                top5.remove(top5.get(0));
+                top5.add(hash.searchNodo(lista.get(i)).getKey());
             }
-
         }
         return top5;
     }

@@ -4,6 +4,7 @@ import Funciones.CSVReader;
 import Funciones.DiaTop50;
 import org.jline.terminal.Terminal;
 import org.jline.terminal.TerminalBuilder;
+import uy.edu.um.prog2.adt.Exceptions.InformacionInvalida;
 import uy.edu.um.prog2.adt.binarytree.MySearchBinaryTree;
 import uy.edu.um.prog2.adt.hash.HashImpl;
 import uy.edu.um.prog2.adt.linkedlist.MyList;
@@ -20,7 +21,7 @@ import static Funciones.Top7Arts.top7;
 
 public class Menu {
 
-    public static void main(String[] args) throws InterruptedException, IOException {
+    public static void main(String[] args) throws InterruptedException, IOException, InformacionInvalida {
         System.out.println("Bienvenido");
         Terminal terminal = TerminalBuilder.terminal();
         terminal.writer().print("Aguarde un momento");
@@ -74,8 +75,13 @@ public class Menu {
             else if (opcion == 2) {
                 System.out.println("Indique la fecha");
                 String fecha = scanner.next();
-                MyList<Song> lista = hashDT50(fecha,hashDT50);
-                for (int i = 0; i<=5; i++){
+                MyList<Song> lista = null;
+                try {
+                    lista = hashDT50(fecha,hashDT50);           //chequear
+                } catch (InformacionInvalida e) {
+                    System.out.println("no hay canciones en esa fecha");
+                }
+                for (int i = 0; i<5; i++){
                     System.out.println(lista.get(i).getName());
                 }
 
@@ -91,7 +97,7 @@ public class Menu {
             }
             else if (opcion == 4) {
                 scanner.nextLine();
-                System.out.println("Indique el artista");
+                System.out.println("Indique el artista");           //chequear
                 String artista = scanner.nextLine();
                 artista = artista;
                 System.out.println("Indique la fecha");
