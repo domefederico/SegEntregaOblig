@@ -1,3 +1,4 @@
+import Entities.Artist;
 import Entities.Song;
 import Funciones.CSVReader;
 import Funciones.DiaTop50;
@@ -15,6 +16,7 @@ import static Funciones.CantArtTop50.cat;
 import static Funciones.CantSongsTempo.cst;
 import static Funciones.DiaTop50.hashDT50;
 import static Funciones.Top.top;
+import static Funciones.Top7Arts.top7;
 
 public class Menu {
 
@@ -43,9 +45,10 @@ public class Menu {
         HashImpl<String, HashImpl<String,MyList<Song>>> hashDP = C.getHashDP();
         MySearchBinaryTree<Float, MyList<Song>> Treet = C.getTreet();
         MyList<String> paises = C.getPaises();
+        HashImpl<String,MyList<Song>> hashDT50 = C.getHashDT50();
+        MyList<Artist> artistas = C.getArtistas();
         terminal.writer().print("\r\033[2K");
         terminal.flush();
-        HashImpl<String,MyList<Song>> hashDT50 = C.getHashDT50();
 
         while (1 == 1) {
             Scanner scanner = new Scanner(System.in);
@@ -79,6 +82,11 @@ public class Menu {
                 System.out.println("\n------------------------------------------------\n");
             }
             else if (opcion == 3) {
+                System.out.println("Indique la fecha de inicio");
+                String fecha0 = scanner.next();
+                System.out.println("Indique la fecha de finalizacion");
+                String fecha1 = scanner.next();
+                MyList<String> list = top7(fecha0, fecha1, artistas, hashDP, paises);
                 System.out.println("\n------------------------------------------------\n");
             }
             else if (opcion == 4) {

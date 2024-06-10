@@ -1,5 +1,6 @@
 package Funciones;
 
+import Entities.Artist;
 import Entities.Song;
 
 import uy.edu.um.prog2.adt.binarytree.MySearchBinaryTree;
@@ -51,12 +52,21 @@ public class CSVReader {
         return paises;
     }
 
+    private MyList<Artist> artistas;
+    public void setArtistas(MyList<Artist> artistas){
+        this.artistas = artistas;
+    }
+    public MyList<Artist> getArtistas(){
+        return artistas;
+    }
+
     public CSVReader() {
         String line;
         HashImpl<String, HashImpl<String,MyList<Song>>> hash = new HashImpl<>(400);
         MySearchBinaryTree<Float, MyList<Song>> Tt = new MySearchBinaryTreeImpl<>();
         MyList<String> lp = new MyLinkedListImpl<>();
         HashImpl<String,MyList<Song>> hashDT = new HashImpl<>(1000);
+        MyList<Artist> la = new MyLinkedListImpl<>();
 
         try (BufferedReader br = new BufferedReader(new FileReader("data_set.csv"))) {
             //Lee la primer linea, que no nos importa
@@ -72,13 +82,14 @@ public class CSVReader {
 
                 //Separa y crea los artistas
                 String[] arts = fields[2].split(", ");
-                String artists=arts[0];
+                String artists = "";
                 for (String art : arts) {
-                    art = art;
-                    //new Artist(art);
-                    if (!Objects.equals(art, arts[0])) {
-                        artists = artists + ", " + art;
+                    Artist artist = new Artist(art);
+                    if (!la.contains(artist)){ la.add(artist); }
+                    if (Objects.equals(art, arts[0])) {
+                        artists = art;
                     }
+                    else{artists = artists + ", " + art;}
                 }
 
                 //Agrega los paises a la lista de paises
@@ -122,9 +133,11 @@ public class CSVReader {
                 hashDT.searchNodo(song.getSnapshotDate()).getData().add(song);
             }
         } catch (IOException e) {e.printStackTrace();}
+        //setea los tads
         setHashDP(hash);
         setTreet(Tt);
         setPaises(lp);
         setHashDT50(hashDT);
+        setArtistas(la);
     }
 }
