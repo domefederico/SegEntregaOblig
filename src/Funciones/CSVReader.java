@@ -68,7 +68,7 @@ public class CSVReader {
         HashImpl<String,MyList<Song>> hashDT = new HashImpl<>(1000);
         MyList<Artist> la = new MyLinkedListImpl<>();
 
-        try (BufferedReader br = new BufferedReader(new FileReader("data_set.csv"))) {
+        try (BufferedReader br = new BufferedReader(new FileReader("data_set_test.csv"))) {
             //Lee la primer linea, que no nos importa
             br.readLine();
 
