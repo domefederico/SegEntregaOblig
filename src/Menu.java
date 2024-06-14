@@ -47,7 +47,7 @@ public class Menu {
         MySearchBinaryTree<Float, MyList<Song>> Treet = C.getTreet();
         MyList<String> paises = C.getPaises();
         HashImpl<String,MyList<Song>> hashDT50 = C.getHashDT50();
-        MyList<Artist> artistas = C.getArtistas();
+        //MyList<Artist> artistas = C.getArtistas();
         terminal.writer().print("\r\033[2K");
         terminal.flush();
 
@@ -92,7 +92,10 @@ public class Menu {
                 String fecha0 = scanner.next();
                 System.out.println("Indique la fecha de finalizacion");
                 String fecha1 = scanner.next();
-                MyList<String> list = top7(fecha0, fecha1, artistas, hashDP, paises);
+                MyList<String> list = top7(fecha0, fecha1, hashDT50);
+                for (int i = 0; i<7; i++){
+                    System.out.println(list.get(i));
+                }
                 System.out.println("\n------------------------------------------------\n");
             }
             else if (opcion == 4) {

@@ -85,7 +85,7 @@ public class CSVReader {
                 String artists = "";
                 for (String art : arts) {
                     Artist artist = new Artist(art);
-                    if (!la.contains(artist)){ la.add(artist); }
+//                    if (!la.contains(artist)){ la.add(artist); }
                     if (Objects.equals(art, arts[0])) {
                         artists = art;
                     }
@@ -138,6 +138,6 @@ public class CSVReader {
         setTreet(Tt);
         setPaises(lp);
         setHashDT50(hashDT);
-        setArtistas(la);
+        //setArtistas(la);
     }
 }
