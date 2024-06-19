@@ -11,35 +11,39 @@ public class Htest {
 
     @Before
     public void initHash() throws InformacionInvalida {
-        hash = new HashImpl<>(4);
+        hash = new HashImpl<>(6);
         hash.insert(1,5);
         hash.insert(3,5);
         hash.insert(5,5);
         hash.insert(2,5);
     }
 
+
+
     @Test
     public void AddTest() {
-        assertEquals(hash.search(1),1);            // 1 es el absoluto del codigo del nodo
-        assertEquals(hash.search(3),3);            // 3 es el absoluto del codigo del nodo
-        assertEquals(hash.search(5),2);            // 5 es el absoluto del codigo del nodo, pero lo desplaza al 2
-        assertEquals(hash.search(2),0);            // 2 es el absoluto del codigo del nodo, 3 ya esta el 3, va al 0
+        Integer a = 5;
+        assertEquals(hash.search(1),a);            // 1 es el absoluto del codigo del nodo
+        assertEquals(hash.search(3),a);            // 3 es el absoluto del codigo del nodo
+        assertEquals(hash.search(5),a);            // 5 es el absoluto del codigo del nodo, pero lo desplaza al 2
+        assertEquals(hash.search(2),a);            // 2 es el absoluto del codigo del nodo, 3 ya esta el 3, va al 0
     }
 
     @Test
     public void DeleteTest() throws InformacionInvalida {
         hash.delete(1);
-        assertEquals(hash.search(1),-1 );
+        assertNull(hash.search(1));
         hash.delete(3);
-        assertEquals(hash.search(3),-1 );
+        assertNull(hash.search(3));
     }
 
     @Test
     public void SearchTest() {
-        assertEquals(hash.search(1),1);            // 1 es el absoluto del codigo del nodo
-        assertEquals(hash.search(3),3);            // 3 es el absoluto del codigo del nodo
-        assertEquals(hash.search(5),2);            // 5 es el absoluto del codigo del nodo, pero lo desplaza al 2
-        assertEquals(hash.search(2),0);            // 2 es el absoluto del codigo del nodo, 3 ya esta el 3, va al 0
+        Integer a = 5;
+        assertEquals(hash.search(1),a);            // 1 es el absoluto del codigo del nodo
+        assertEquals(hash.search(3),a);            // 3 es el absoluto del codigo del nodo
+        assertEquals(hash.search(5),a);            // 5 es el absoluto del codigo del nodo, pero lo desplaza al 2
+        assertEquals(hash.search(2),a);            // 2 es el absoluto del codigo del nodo, 3 ya esta el 3, va al 0
 
     }
 

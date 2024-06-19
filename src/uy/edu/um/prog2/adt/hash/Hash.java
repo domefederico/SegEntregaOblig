@@ -8,7 +8,7 @@ public interface Hash<K,T> {
 
     void delete(K key) throws InformacionInvalida;
 
-    int search(K key);
+    T search(K key);
 
     HashNode<K,T> searchNodo(K key);
 }

@@ -68,7 +68,7 @@ public class CSVReader {
         HashImpl<String,MyList<Song>> hashDT = new HashImpl<>(1000);
         MyList<Artist> la = new MyLinkedListImpl<>();
 
-        try (BufferedReader br = new BufferedReader(new FileReader("data_set_test.csv"))) {
+        try (BufferedReader br = new BufferedReader(new FileReader("data_set.csv"))) {
             //Lee la primer linea, que no nos importa
             br.readLine();
 
@@ -79,6 +79,11 @@ public class CSVReader {
 
                 // Separa por la coma
                 String[] fields = line.split("\",\"");
+
+                //Crea pais mundial
+                if (fields[6] == "") {
+                    fields[6] = "XX";
+                }
 
                 //Separa y crea los artistas
                 String[] arts = fields[2].split(", ");
@@ -112,13 +117,15 @@ public class CSVReader {
                 );
 
                 //Agrega la cancion al hash
-                if(hash.search(song.getSnapshotDate()) == -1) {
+                if(hash.search(song.getSnapshotDate()) == null) {
                     hash.insert(song.getSnapshotDate(), new HashImpl<>(100));
                 }
-                if(hash.searchNodo(song.getSnapshotDate()).getData().search(song.getCountry()) == -1){
-                    hash.searchNodo(song.getSnapshotDate()).getData().insert(song.getCountry(), new MyLinkedListImpl<>());
+
+                if (hash.search(song.getSnapshotDate()).search(song.getCountry()) == null) {
+                    hash.search(song.getSnapshotDate()).insert(song.getCountry(), new MyLinkedListImpl<>());
                 }
-                hash.searchNodo(song.getSnapshotDate()).getData().searchNodo(song.getCountry()).getData().add(song);
+
+                hash.search(song.getSnapshotDate()).search(song.getCountry()).add(song);
 
                 if(!Tt.contains(song.getTempo())){
                     Tt.add(song.getTempo(), new MyLinkedListImpl<>());
@@ -127,10 +134,10 @@ public class CSVReader {
 
                 // agrega las canciones al hashDT
 
-                if(hashDT.search(song.getSnapshotDate()) == -1) {
+                if(hashDT.search(song.getSnapshotDate()) == null) {
                     hashDT.insert(song.getSnapshotDate(), new MyLinkedListImpl<>());
                 }
-                hashDT.searchNodo(song.getSnapshotDate()).getData().add(song);
+                hashDT.search(song.getSnapshotDate()).add(song);
             }
         } catch (IOException e) {e.printStackTrace();}
         //setea los tads

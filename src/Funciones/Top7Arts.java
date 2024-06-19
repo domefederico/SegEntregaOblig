@@ -1,6 +1,5 @@
 package Funciones;
 
-import Entities.Artist;
 import Entities.Song;
 import uy.edu.um.prog2.adt.hash.HashImpl;
 import uy.edu.um.prog2.adt.linkedlist.MyLinkedListImpl;
@@ -8,8 +7,6 @@ import uy.edu.um.prog2.adt.linkedlist.MyList;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
-
-import static Funciones.CantArtTop50.cat;
 
 public class Top7Arts {
 
@@ -26,30 +23,32 @@ public class Top7Arts {
 
         while ( !faux.isAfter(f1) ) {
             String fechaaux = faux.format(formatter);
-            if (hashDT50.searchNodo(fechaaux) != null) {
+            if (hashDT50.search(fechaaux) != null) {
                 MyList<Song> canc = hashDT50.searchNodo(fechaaux).getData();
                 for (int i = 0; i < canc.size(); i++) {
                     String[] array = canc.get(i).getArtistsarray();
                     for (String art:array) {
-                        if (dome.searchNodo(art) == null) {
+                        if (dome.search(art) == null) {
                             dome.insert(art,0);
                         }
-                        dome.searchNodo(art).setData(dome.searchNodo(art).getData()+1);
+                        if (dome.search(art) != null) {                             //me lo pedia para runear
+                            dome.searchNodo(art).setData(dome.search(art) + 1);
 
-                        listr.sort();
-                        if (listr.size() < 7) {
-                            listr.add(art);
-                        } else if (dome.searchNodo(art).getData() > dome.searchNodo(listr.get(0)).getData()) {
-                            listr.remove(listr.get(0));
-                            listr.add(dome.searchNodo(listr.get(i)).getKey());
+                            if (!listr.contains(art)) {
+                                listr.sort();
+                                if (listr.size() <= 7) {
+                                    listr.add(art);
+                                } else if (dome.search(art) > dome.search(listr.get(0))) {
+                                    listr.remove(listr.get(0));
+                                    listr.add(art);
+                                }
+                            }
                         }
                     }
                 }
             }
-            faux.plusDays(1);
+            faux = faux.plusDays(1);
         }
-
         return listr;
     }
-
 }

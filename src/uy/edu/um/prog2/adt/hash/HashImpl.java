@@ -71,40 +71,88 @@ public class HashImpl<K,T> implements Hash<K,T> {
 
     @Override
     public void delete(K key) throws InformacionInvalida {
-        int a = search(key);
-        if (a != -1) {
-            grilla[a] = null;
-        } else {
-            throw new InformacionInvalida();
-        }
-    }
+        int codigo = key.hashCode();
+        int absoluto = Math.abs(codigo);
+        int marcador = absoluto % size;
+        int marcador1 = marcador;
 
-    @Override
-    public int search(K key) {
-        int a = -1;
-        for (int i = 0; i < size; i++) {
-            if (grilla[i] != null) {
-                if (grilla[i].getKey().equals(key)) {
-                    a = i;
+        if (grilla[marcador] != null) {
+            if (!grilla[marcador].getKey().equals(key)) {
+                while (grilla[marcador] != null) {
+                    marcador = (marcador + 1) % size;
+                    if (marcador == marcador1) {
+                        throw new InformacionInvalida();
+                    }
                 }
             }
         }
-        return a;
+
+        grilla[marcador] = null;
+    }
+
+    @Override
+    public T search(K key) {
+
+        int codigo = key.hashCode();
+        int absoluto = Math.abs(codigo);
+        int marcador = absoluto % size;
+        int marcador1 = marcador;
+
+        if (grilla[marcador] == null) {
+            return null;
+        } else {
+            if (!grilla[marcador].getKey().equals(key)) {
+                while (grilla[marcador] != null) {
+                    marcador = (marcador + 1) % size;
+                    if (grilla[marcador] != null) {
+                        if (grilla[marcador].getKey().equals(key)) {
+                            return grilla[marcador].getData();
+                        }
+                    }
+                    if (marcador == marcador1) {
+                        return null;
+                    }
+                }
+            }
+        }
+
+        if (grilla[marcador] != null) {
+            return grilla[marcador].getData();
+        }
+        return null;
+
     }
 
     @Override
     public HashNode<K, T> searchNodo(K key) {
-        int a = -1;
-        for (int i = 0; i < size; i++) {
-            if (grilla[i] != null) {
-                if (grilla[i].getKey().equals(key)) {
-                    a = i;
+
+        int codigo = key.hashCode();
+        int absoluto = Math.abs(codigo);
+        int marcador = absoluto % size;
+        int marcador1 = marcador;
+
+        if (grilla[marcador] == null) {
+            return null;
+        } else {
+            if (!grilla[marcador].getKey().equals(key)) {
+                while (grilla[marcador] != null) {
+                    marcador = (marcador + 1) % size;
+                    if (grilla[marcador] != null) {
+                        if (grilla[marcador].getKey().equals(key)) {
+                            return grilla[marcador];
+                        }
+                    }
+                    if (marcador == marcador1) {
+                        return null;
+                    }
                 }
             }
         }
-        if ( a != -1) {
-            return grilla[a];
+
+        if (grilla[marcador] != null) {
+            return grilla[marcador];
         }
         return null;
+
     }
 }

@@ -93,7 +93,7 @@ public class Menu {
                 System.out.println("Indique la fecha de finalizacion");
                 String fecha1 = scanner.next();
                 MyList<String> list = top7(fecha0, fecha1, hashDT50);
-                for (int i = 0; i<7; i++){
+                for (int i = 0; i< list.size(); i++){
                     System.out.println(list.get(i));
                 }
                 System.out.println("\n------------------------------------------------\n");
