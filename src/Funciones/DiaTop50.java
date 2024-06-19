@@ -18,19 +18,23 @@ public class DiaTop50 {
         }
 
         for (int i = 0; i < lista.size(); i++) {
-            if (hash.search(lista.get(i)) == -1) {
+            if (hash.search(lista.get(i)) == null) {
                 hash.insert(lista.get(i),0);
             }
-            int var = hash.searchNodo(lista.get(i)).getData();
-            hash.searchNodo(lista.get(i)).setData(var+1);
-            int var2 = hash.searchNodo(lista.get(i)).getData();
 
-            top5.sort();
-            if (top5.size() < 5) {
-                top5.add(hash.searchNodo(lista.get(i)).getKey());
-            } else if (var2 > hash.searchNodo(top5.get(0)).getData()) {
-                top5.remove(top5.get(0));
-                top5.add(hash.searchNodo(lista.get(i)).getKey());
+            if (hash.search(lista.get(i)) != null) {
+                int var = hash.searchNodo(lista.get(i)).getData();
+                hash.searchNodo(lista.get(i)).setData(var + 1);
+
+                int var2 = hash.searchNodo(lista.get(i)).getData();
+
+                top5.sort();
+                if (top5.size() < 5) {
+                    top5.add(hash.searchNodo(lista.get(i)).getKey());
+                } else if (var2 > hash.search(top5.get(0))) {
+                    top5.remove(top5.get(0));
+                    top5.add(hash.searchNodo(lista.get(i)).getKey());
+                }
             }
         }
         return top5;
