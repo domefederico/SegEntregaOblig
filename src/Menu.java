@@ -1,7 +1,5 @@
-import Entities.Artist;
 import Entities.Song;
 import Funciones.CSVReader;
-import Funciones.DiaTop50;
 import org.jline.terminal.Terminal;
 import org.jline.terminal.TerminalBuilder;
 import uy.edu.um.prog2.adt.Exceptions.InformacionInvalida;
@@ -26,28 +24,30 @@ public class Menu {
         Terminal terminal = TerminalBuilder.terminal();
         terminal.writer().print("Aguarde un momento");
         terminal.flush();
-        Thread.sleep(600);
+        Thread.sleep(400);
         terminal.writer().print("\r\033[2K");
         terminal.flush();
         terminal.writer().print("Aguarde un momento.");
         terminal.flush();
-        Thread.sleep(600);
+        Thread.sleep(400);
         terminal.writer().print("\r\033[2K");
         terminal.flush();
         terminal.writer().print("Aguarde un momento..");
         terminal.flush();
-        Thread.sleep(600);
+        Thread.sleep(400);
         terminal.writer().print("\r\033[2K");
         terminal.flush();
         terminal.writer().print("Aguarde un momento...");
         terminal.flush();
 
+        long t0 = System.currentTimeMillis();
         CSVReader C = new CSVReader();
+        long t1 = System.currentTimeMillis();
+        System.out.println("\nLa carga de datos demoro: " + (t1-t0) + " ms");
         HashImpl<String, HashImpl<String,MyList<Song>>> hashDP = C.getHashDP();
         MySearchBinaryTree<Float, MyList<Song>> Treet = C.getTreet();
         MyList<String> paises = C.getPaises();
         HashImpl<String,MyList<Song>> hashDT50 = C.getHashDT50();
-        //MyList<Artist> artistas = C.getArtistas();
         terminal.writer().print("\r\033[2K");
         terminal.flush();
 
@@ -60,6 +60,7 @@ public class Menu {
                 String pais = scanner.next();
                 System.out.println("Indique la fecha(YYYY-MM-DD)");
                 String dia = scanner.next();
+                t0 = System.currentTimeMillis();
                 MyList<Song> listac = top(pais,dia,hashDP);
                 System.out.println("\n");
                 int i = 0;
@@ -70,13 +71,15 @@ public class Menu {
                     System.out.println((i+1)+ ". " + listac.get(i).getName() + " - " + listac.get(i).getArtists());
                     i++;
                 }
+                t1 = System.currentTimeMillis();
+                System.out.println("Tiempo: " + (t1-t0) + " ms");
                 System.out.println("\n------------------------------------------------\n");
             }
             else if (opcion == 2) {
                 System.out.println("Indique la fecha(YYYY-MM-DD)");
                 String fecha = scanner.next();
-                System.out.println(" ");
-
+                System.out.println("\n");
+                t0 = System.currentTimeMillis();
                 MyList<Song> lista = hashDT50(fecha,hashDT50);
 
 //                try {
@@ -87,7 +90,8 @@ public class Menu {
                 for (int i = 0; i<5; i++){
                     System.out.println(lista.get(i).getName());
                 }
-
+                t1 = System.currentTimeMillis();
+                System.out.println("Tiempo: " + (t1-t0) + " ms");
                 System.out.println("\n------------------------------------------------\n");
             }
             else if (opcion == 3) {
@@ -96,10 +100,13 @@ public class Menu {
                 System.out.println("Indique la fecha de finalizacion");
                 String fecha1 = scanner.next();
                 MyList<String> list = top7(fecha0, fecha1, hashDT50);
-                System.out.println(" ");
+                t0 = System.currentTimeMillis();
+                System.out.println("\n");
                 for (int i = 0; i< list.size(); i++){
                     System.out.println(list.get(i));
                 }
+                t1 = System.currentTimeMillis();
+                System.out.println("Tiempo: " + (t1-t0) + " ms");
                 System.out.println("\n------------------------------------------------\n");
             }
             else if (opcion == 4) {
@@ -109,8 +116,10 @@ public class Menu {
                 artista = artista;
                 System.out.println("Indique la fecha(YYYY-MM-DD)");
                 String fecha = scanner.next();
-                System.out.println(" ");
+                t0 = System.currentTimeMillis();
                 System.out.println("\n" + artista + " aparecio " + cat(artista, fecha, hashDP, paises) + " veces en tops 50 en la fecha ingresada");
+                t1 = System.currentTimeMillis();
+                System.out.println("Tiempo: " + (t1-t0) + " ms");
                 System.out.println("\n------------------------------------------------\n");
             }
             else if (opcion == 5) {
@@ -122,8 +131,11 @@ public class Menu {
                 String fecha0 = scanner.next();
                 System.out.println("Indique la fecha de finalizacion(YYYY-MM-DD)");
                 String fecha1 = scanner.next();
-                System.out.println(" ");
+                System.out.println("\n");
+                t0 = System.currentTimeMillis();
                 System.out.println("\nExisten " + cst(tempo0, tempo1, fecha0, fecha1, Treet) + " canciones con un tempo entre " + tempo0 + " y " + tempo1 + " en el rango de fechas entre " + fecha0 + " y " + fecha1);
+                t1 = System.currentTimeMillis();
+                System.out.println("Tiempo: " + (t1-t0) + " ms");
                 System.out.println("\n------------------------------------------------\n");
             }
             else if (opcion == 0) { break; }
