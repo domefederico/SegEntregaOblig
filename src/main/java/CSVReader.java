@@ -1,8 +1,5 @@
-package Funciones;
-
 import Entities.Artist;
 import Entities.Song;
-
 import uy.edu.um.prog2.adt.binarytree.MySearchBinaryTree;
 import uy.edu.um.prog2.adt.binarytree.MySearchBinaryTreeImpl;
 import uy.edu.um.prog2.adt.hash.HashImpl;

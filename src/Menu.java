@@ -1,7 +1,7 @@
 import Entities.Song;
-import Funciones.CSVReader;
 import org.jline.terminal.Terminal;
 import org.jline.terminal.TerminalBuilder;
+
 import uy.edu.um.prog2.adt.Exceptions.InformacionInvalida;
 import uy.edu.um.prog2.adt.binarytree.MySearchBinaryTree;
 import uy.edu.um.prog2.adt.hash.HashImpl;
@@ -11,11 +11,6 @@ import uy.edu.um.prog2.adt.linkedlist.MyList;
 import java.io.IOException;
 import java.util.Scanner;
 
-import static Funciones.CantArtTop50.cat;
-import static Funciones.CantSongsTempo.cst;
-import static Funciones.DiaTop50.hashDT50;
-import static Funciones.Top.top;
-import static Funciones.Top7Arts.top7;
 
 public class Menu {
 
@@ -40,6 +35,7 @@ public class Menu {
         terminal.writer().print("Aguarde un momento...");
         terminal.flush();
 
+        Runtime runtime = Runtime.getRuntime();
         long t0 = System.currentTimeMillis();
         CSVReader C = new CSVReader();
         long t1 = System.currentTimeMillis();
@@ -56,12 +52,13 @@ public class Menu {
             System.out.println("1. Top 10 canciones en un pais en un dia\n2. Top 5 canciones que aparecen en un top 50 en un dia\n3. Top 7 artistas que aparecen en el top 50 en un rango de fechas\n4. Cantidad de veces que aparece un artista en un top 50 en una dia\n5. Cantidad de canciones con tempo en un rango para un rango de fechas\n0. Cerrar\nElija la funcion que desea:");
             int opcion = scanner.nextInt();
             if (opcion == 1) {
+                long memoryBefore = runtime.totalMemory() - runtime.freeMemory();
                 System.out.println("Indique el pais");
                 String pais = scanner.next();
                 System.out.println("Indique la fecha(YYYY-MM-DD)");
                 String dia = scanner.next();
                 t0 = System.currentTimeMillis();
-                MyList<Song> listac = top(pais,dia,hashDP);
+                MyList<Song> listac = Methods.top(pais,dia,hashDP);
                 System.out.println("\n");
                 int i = 0;
                 while (listac.size()>i){
@@ -72,15 +69,18 @@ public class Menu {
                     i++;
                 }
                 t1 = System.currentTimeMillis();
-                System.out.println("Tiempo: " + (t1-t0) + " ms");
+                System.out.println("\nTiempo: " + (t1-t0) + " ms");
+                long memoryAfter = runtime.totalMemory() - runtime.freeMemory();
+                System.out.println("Memoria: " + (memoryAfter - memoryBefore) + " bytes");
                 System.out.println("\n------------------------------------------------\n");
             }
             else if (opcion == 2) {
+                long memoryBefore = runtime.totalMemory() - runtime.freeMemory();
                 System.out.println("Indique la fecha(YYYY-MM-DD)");
                 String fecha = scanner.next();
                 System.out.println("\n");
                 t0 = System.currentTimeMillis();
-                MyList<Song> lista = hashDT50(fecha,hashDT50);
+                MyList<Song> lista = Methods.hashDT50(fecha,hashDT50);
 
 //                try {
 //                    lista = hashDT50(fecha,hashDT50);           //chequear
@@ -91,25 +91,31 @@ public class Menu {
                     System.out.println(lista.get(i).getName());
                 }
                 t1 = System.currentTimeMillis();
-                System.out.println("Tiempo: " + (t1-t0) + " ms");
+                System.out.println("\nTiempo: " + (t1-t0) + " ms");
+                long memoryAfter = runtime.totalMemory() - runtime.freeMemory();
+                System.out.println("Memoria: " + (memoryAfter - memoryBefore) + " bytes");
                 System.out.println("\n------------------------------------------------\n");
             }
             else if (opcion == 3) {
+                long memoryBefore = runtime.totalMemory() - runtime.freeMemory();
                 System.out.println("Indique la fecha de inicio");
                 String fecha0 = scanner.next();
                 System.out.println("Indique la fecha de finalizacion");
                 String fecha1 = scanner.next();
-                MyList<String> list = top7(fecha0, fecha1, hashDT50);
+                MyList<String> list = Methods.top7(fecha0, fecha1, hashDT50);
                 t0 = System.currentTimeMillis();
                 System.out.println("\n");
                 for (int i = 0; i< list.size(); i++){
                     System.out.println(list.get(i));
                 }
                 t1 = System.currentTimeMillis();
-                System.out.println("Tiempo: " + (t1-t0) + " ms");
+                System.out.println("\nTiempo: " + (t1-t0) + " ms");
+                long memoryAfter = runtime.totalMemory() - runtime.freeMemory();
+                System.out.println("Memoria: " + (memoryAfter - memoryBefore) + " bytes");
                 System.out.println("\n------------------------------------------------\n");
             }
             else if (opcion == 4) {
+                long memoryBefore = runtime.totalMemory() - runtime.freeMemory();
                 scanner.nextLine();
                 System.out.println("Indique el artista");           //chequear
                 String artista = scanner.nextLine();
@@ -117,12 +123,15 @@ public class Menu {
                 System.out.println("Indique la fecha(YYYY-MM-DD)");
                 String fecha = scanner.next();
                 t0 = System.currentTimeMillis();
-                System.out.println("\n" + artista + " aparecio " + cat(artista, fecha, hashDP, paises) + " veces en tops 50 en la fecha ingresada");
+                System.out.println("\n" + artista + " aparecio " + Methods.cat(artista, fecha, hashDP, paises) + " veces en tops 50 en la fecha ingresada");
                 t1 = System.currentTimeMillis();
-                System.out.println("Tiempo: " + (t1-t0) + " ms");
+                System.out.println("\nTiempo: " + (t1-t0) + " ms");
+                long memoryAfter = runtime.totalMemory() - runtime.freeMemory();
+                System.out.println("Memoria: " + (memoryAfter - memoryBefore) + " bytes");
                 System.out.println("\n------------------------------------------------\n");
             }
             else if (opcion == 5) {
+                long memoryBefore = runtime.totalMemory() - runtime.freeMemory();
                 System.out.println("Indique el tempo minimo");
                 Float tempo0 = Float.parseFloat(scanner.next());
                 System.out.println("Indique el tempo maximo");
@@ -131,11 +140,12 @@ public class Menu {
                 String fecha0 = scanner.next();
                 System.out.println("Indique la fecha de finalizacion(YYYY-MM-DD)");
                 String fecha1 = scanner.next();
-                System.out.println("\n");
                 t0 = System.currentTimeMillis();
-                System.out.println("\nExisten " + cst(tempo0, tempo1, fecha0, fecha1, Treet) + " canciones con un tempo entre " + tempo0 + " y " + tempo1 + " en el rango de fechas entre " + fecha0 + " y " + fecha1);
+                System.out.println("\nExisten " + Methods.cst(tempo0, tempo1, fecha0, fecha1, Treet) + " canciones con un tempo entre " + tempo0 + " y " + tempo1 + " en el rango de fechas entre " + fecha0 + " y " + fecha1);
                 t1 = System.currentTimeMillis();
-                System.out.println("Tiempo: " + (t1-t0) + " ms");
+                System.out.println("\nTiempo: " + (t1-t0) + " ms");
+                long memoryAfter = runtime.totalMemory() - runtime.freeMemory();
+                System.out.println("Memoria: " + (memoryAfter - memoryBefore) + " bytes");
                 System.out.println("\n------------------------------------------------\n");
             }
             else if (opcion == 0) { break; }
