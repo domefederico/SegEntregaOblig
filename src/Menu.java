@@ -36,10 +36,12 @@ public class Menu {
         terminal.flush();
 
         Runtime runtime = Runtime.getRuntime();
+        long memoryBefore = runtime.totalMemory() - runtime.freeMemory();
         long t0 = System.currentTimeMillis();
         CSVReader C = new CSVReader();
         long t1 = System.currentTimeMillis();
-        System.out.println("\nLa carga de datos demoro: " + (t1-t0) + " ms");
+        long memoryAfter = runtime.totalMemory() - runtime.freeMemory();
+        System.out.println("\nLa carga de datos demoro: " + (t1-t0) + " ms y consumio " + (memoryAfter - memoryBefore) + " bytes");
         HashImpl<String, HashImpl<String,MyList<Song>>> hashDP = C.getHashDP();
         MySearchBinaryTree<Float, MyList<Song>> Treet = C.getTreet();
         MyList<String> paises = C.getPaises();
@@ -52,7 +54,7 @@ public class Menu {
             System.out.println("1. Top 10 canciones en un pais en un dia\n2. Top 5 canciones que aparecen en un top 50 en un dia\n3. Top 7 artistas que aparecen en el top 50 en un rango de fechas\n4. Cantidad de veces que aparece un artista en un top 50 en una dia\n5. Cantidad de canciones con tempo en un rango para un rango de fechas\n0. Cerrar\nElija la funcion que desea:");
             int opcion = scanner.nextInt();
             if (opcion == 1) {
-                long memoryBefore = runtime.totalMemory() - runtime.freeMemory();
+                memoryBefore = runtime.totalMemory() - runtime.freeMemory();
                 System.out.println("Indique el pais");
                 String pais = scanner.next();
                 System.out.println("Indique la fecha(YYYY-MM-DD)");
@@ -70,7 +72,7 @@ public class Menu {
                 }
                 t1 = System.currentTimeMillis();
                 System.out.println("\nTiempo: " + (t1-t0) + " ms");
-                long memoryAfter = runtime.totalMemory() - runtime.freeMemory();
+                memoryAfter = runtime.totalMemory() - runtime.freeMemory();
                 System.out.println("Memoria: " + (memoryAfter - memoryBefore) + " bytes");
                 System.out.println("\n------------------------------------------------\n");
             }

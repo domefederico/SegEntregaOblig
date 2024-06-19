@@ -49,13 +49,6 @@ public class CSVReader {
         return paises;
     }
 
-    private MyList<Artist> artistas;
-    public void setArtistas(MyList<Artist> artistas){
-        this.artistas = artistas;
-    }
-    public MyList<Artist> getArtistas(){
-        return artistas;
-    }
 
     public CSVReader() {
         String line;
@@ -87,7 +80,6 @@ public class CSVReader {
                 String artists = "";
                 for (String art : arts) {
                     Artist artist = new Artist(art);
-//                    if (!la.contains(artist)){ la.add(artist); }
                     if (Objects.equals(art, arts[0])) {
                         artists = art;
                     }
@@ -130,7 +122,6 @@ public class CSVReader {
                 Tt.find(song.getTempo()).add(song);
 
                 // agrega las canciones al hashDT
-
                 if(hashDT.search(song.getSnapshotDate()) == null) {
                     hashDT.insert(song.getSnapshotDate(), new MyLinkedListImpl<>());
                 }
@@ -142,6 +133,5 @@ public class CSVReader {
         setTreet(Tt);
         setPaises(lp);
         setHashDT50(hashDT);
-        //setArtistas(la);
     }
 }
