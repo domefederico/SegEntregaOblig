@@ -77,7 +77,7 @@ public class Menu {
                 System.out.println("\n------------------------------------------------\n");
             }
             else if (opcion == 2) {
-                long memoryBefore = runtime.totalMemory() - runtime.freeMemory();
+                memoryBefore = runtime.totalMemory() - runtime.freeMemory();
                 System.out.println("Indique la fecha(YYYY-MM-DD)");
                 String fecha = scanner.next();
                 System.out.println("\n");
@@ -94,12 +94,12 @@ public class Menu {
                 }
                 t1 = System.currentTimeMillis();
                 System.out.println("\nTiempo: " + (t1-t0) + " ms");
-                long memoryAfter = runtime.totalMemory() - runtime.freeMemory();
+                memoryAfter = runtime.totalMemory() - runtime.freeMemory();
                 System.out.println("Memoria: " + (memoryAfter - memoryBefore) + " bytes");
                 System.out.println("\n------------------------------------------------\n");
             }
             else if (opcion == 3) {
-                long memoryBefore = runtime.totalMemory() - runtime.freeMemory();
+                memoryBefore = runtime.totalMemory() - runtime.freeMemory();
                 System.out.println("Indique la fecha de inicio");
                 String fecha0 = scanner.next();
                 System.out.println("Indique la fecha de finalizacion");
@@ -112,12 +112,12 @@ public class Menu {
                 }
                 t1 = System.currentTimeMillis();
                 System.out.println("\nTiempo: " + (t1-t0) + " ms");
-                long memoryAfter = runtime.totalMemory() - runtime.freeMemory();
+                memoryAfter = runtime.totalMemory() - runtime.freeMemory();
                 System.out.println("Memoria: " + (memoryAfter - memoryBefore) + " bytes");
                 System.out.println("\n------------------------------------------------\n");
             }
             else if (opcion == 4) {
-                long memoryBefore = runtime.totalMemory() - runtime.freeMemory();
+                memoryBefore = runtime.totalMemory() - runtime.freeMemory();
                 scanner.nextLine();
                 System.out.println("Indique el artista");           //chequear
                 String artista = scanner.nextLine();
@@ -128,12 +128,12 @@ public class Menu {
                 System.out.println("\n" + artista + " aparecio " + Methods.cat(artista, fecha, hashDP, paises) + " veces en tops 50 en la fecha ingresada");
                 t1 = System.currentTimeMillis();
                 System.out.println("\nTiempo: " + (t1-t0) + " ms");
-                long memoryAfter = runtime.totalMemory() - runtime.freeMemory();
+                memoryAfter = runtime.totalMemory() - runtime.freeMemory();
                 System.out.println("Memoria: " + (memoryAfter - memoryBefore) + " bytes");
                 System.out.println("\n------------------------------------------------\n");
             }
             else if (opcion == 5) {
-                long memoryBefore = runtime.totalMemory() - runtime.freeMemory();
+                memoryBefore = runtime.totalMemory() - runtime.freeMemory();
                 System.out.println("Indique el tempo minimo");
                 Float tempo0 = Float.parseFloat(scanner.next());
                 System.out.println("Indique el tempo maximo");
@@ -146,7 +146,7 @@ public class Menu {
                 System.out.println("\nExisten " + Methods.cst(tempo0, tempo1, fecha0, fecha1, Treet) + " canciones con un tempo entre " + tempo0 + " y " + tempo1 + " en el rango de fechas entre " + fecha0 + " y " + fecha1);
                 t1 = System.currentTimeMillis();
                 System.out.println("\nTiempo: " + (t1-t0) + " ms");
-                long memoryAfter = runtime.totalMemory() - runtime.freeMemory();
+                memoryAfter = runtime.totalMemory() - runtime.freeMemory();
                 System.out.println("Memoria: " + (memoryAfter - memoryBefore) + " bytes");
                 System.out.println("\n------------------------------------------------\n");
             }
